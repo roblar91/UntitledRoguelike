@@ -5,7 +5,6 @@ import knc.roguelike.model.entity.Ground;
 import knc.roguelike.model.entity.Item;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Tile {
     private Ground ground;
@@ -16,8 +15,16 @@ public class Tile {
         return ground;
     }
 
+    public boolean hasGround() {
+        return ground != null;
+    }
+
     public void setGround(Ground ground) {
         this.ground = ground;
+    }
+
+    public boolean hasCreature() {
+        return creature != null;
     }
 
     public Creature getCreature() {
@@ -28,8 +35,12 @@ public class Tile {
         this.creature = creature;
     }
 
-    public Iterator<Item> getItems() {
-        return items.iterator();
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
     }
 
     public void addItem(Item item) {
