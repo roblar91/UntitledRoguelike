@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import knc.roguelike.model.world.Area;
 
-public class Entity {
+public abstract class Entity {
     private ImageView spriteView;
     private Area area;
     private int posX;
