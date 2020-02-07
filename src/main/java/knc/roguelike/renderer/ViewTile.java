@@ -7,6 +7,7 @@
 package knc.roguelike.renderer;
 
 import javafx.scene.control.Control;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import knc.roguelike.model.world.Tile;
 
@@ -27,6 +28,7 @@ class ViewTile extends Pane {
     /**
      * Render the provided {@link knc.roguelike.model.world.Tile} by getting the {@link knc.roguelike.model.entity.Ground},
      * {@link knc.roguelike.model.entity.Creature} and {@link knc.roguelike.model.entity.Item} contained in the provided tile.
+     * Rendering priority is: Creature > Item > Ground. Background is always applied from Ground if present.
      * @param tile The tile that should be displayed
      */
     void setTile(Tile tile) {
@@ -37,17 +39,23 @@ class ViewTile extends Pane {
         }
 
         if(tile.hasGround()){
-            var ground = tile.getGround().getSpriteView();
-            ground.setFitWidth(getPrefWidth());
-            ground.setFitHeight(getPrefHeight());
-            getChildren().add(ground);
+            setBackground(tile.getGround().getBackground());
         }
 
+        ImageView sprite;
+
         if(tile.hasCreature()){
-            var creature = tile.getCreature().getSpriteView();
-            creature.setFitWidth(getPrefWidth());
-            creature.setFitHeight(getPrefHeight());
-            getChildren().add(creature);
+            sprite = tile.getCreature().getSpriteView();
+        } else if(tile.hasItems()){
+            sprite = tile.getTopItem().getSpriteView();
+        } else if(tile.hasGround()){
+            sprite = tile.getGround().getSpriteView();
+        } else {
+            return;
         }
+
+        sprite.setFitWidth(getPrefWidth());
+        sprite.setFitHeight(getPrefHeight());
+        getChildren().add(sprite);
     }
 }

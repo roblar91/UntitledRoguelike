@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Tile {
     private Ground ground;
     private Creature creature;
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<>();
 
     public Ground getGround() {
         return ground;
@@ -41,6 +41,10 @@ public class Tile {
         this.creature = creature;
     }
 
+    public boolean hasItems() {
+        return items.size() > 0;
+    }
+
     public ArrayList<Item> getItems() {
         return items;
     }
@@ -55,6 +59,10 @@ public class Tile {
 
     public void removeItem(Item item) {
         items.remove(item);
+    }
+
+    public Item getTopItem() {
+        return items.get(items.size() - 1);
     }
 }
 
