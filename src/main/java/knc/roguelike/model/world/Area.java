@@ -6,6 +6,9 @@
 
 package knc.roguelike.model.world;
 
+import knc.roguelike.model.entity.Creature;
+import knc.roguelike.model.entity.Entity;
+
 public class Area {
     private Tile[][] tiles;
 
@@ -29,5 +32,16 @@ public class Area {
         } catch(ArrayIndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    public void move(Entity target, int dX, int dY) {
+        var originTile = tiles[target.getPosX()][target.getPosY()];
+        var targetTile = tiles[target.getPosX() + dX][target.getPosY() + dY];
+
+        // todo: collision check
+
+        originTile.setCreature(null);
+        targetTile.setCreature((Creature) target);
+        target.setPosition(target.getPosX() + dX, target.getPosY() + dY);
     }
 }

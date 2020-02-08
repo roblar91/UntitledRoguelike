@@ -15,6 +15,8 @@ public abstract class Entity {
     private ImageView imageView;
     private Image image;
     private Color color;
+    private int posX;
+    private int posY;
 
     public Entity(Image image, Color color) {
         this.imageView = new ImageView(image);
@@ -22,6 +24,7 @@ public abstract class Entity {
         this.color = color;
 
         this.imageView.fitHeightProperty().addListener((obs, oldV, newV) -> applyColorBlend());
+        this.applyColorBlend();
     }
 
     private void applyColorBlend() {
@@ -50,5 +53,23 @@ public abstract class Entity {
 
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
+    }
+
+    public void setPosition(int x, int y) {
+        posX = x;
+        posY = y;
+    }
+
+    public void move(int dX, int dY) {
+        posX += dX;
+        posY += dY;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
     }
 }
