@@ -10,17 +10,27 @@ import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import knc.roguelike.model.entity.component.Component;
+import knc.roguelike.model.entity.component.Type;
+import knc.roguelike.model.world.Area;
 
-public abstract class Entity {
+import java.util.ArrayList;
+
+public class Entity {
+    private ArrayList<Component> components = new ArrayList<>();
     private ImageView imageView;
+    private Position position;
     private Image image;
     private Color color;
-    private int posX;
-    private int posY;
 
-    public Entity(Image image, Color color) {
-        this.imageView = new ImageView(image);
+    public Entity(Position position, Image image) {
+        this.position = position;
         this.image = image;
+        this.imageView = new ImageView(image);
+    }
+
+    public Entity(Position position, Image image, Color color) {
+        this(position, image);
         this.color = color;
 
         this.imageView.fitHeightProperty().addListener((obs, oldV, newV) -> applyColorBlend());
@@ -55,21 +65,34 @@ public abstract class Entity {
         this.imageView = imageView;
     }
 
-    public void setPosition(int x, int y) {
-        posX = x;
-        posY = y;
+    public void addComponent(Component component) {
+        components.add(component);
     }
 
-    public void move(int dX, int dY) {
-        posX += dX;
-        posY += dY;
+    public Component getComponent(Type type) {
+        for(Component component : components) {
+            if(component.getType() == type) {
+                return component;
+            }
+        }
+
+        return null;
+    }
+
+    public Area getArea() {
+        return position.area;
     }
 
     public int getPosX() {
-        return posX;
+        return position.posX;
     }
 
     public int getPosY() {
-        return posY;
+        return position.posY;
+    }
+
+    public void setPosition(int x, int y) {
+        this.position.posX = x;
+        this.position.posY = y;
     }
 }

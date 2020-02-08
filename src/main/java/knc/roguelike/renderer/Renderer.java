@@ -78,7 +78,7 @@ public class Renderer extends Pane{
     /**
      * Updates each tile with the current state of the associated {@link knc.roguelike.model.world.Area}.
      */
-    public void render() {
+    public void renderAll() {
         for(int x = 0; x< horizontalTiles; x++) {
             for(int y = 0; y< verticalTiles; y++) {
                 var tile = area.getTile(x+cameraX, y+cameraY);

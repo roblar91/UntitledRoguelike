@@ -9,6 +9,7 @@ package knc.roguelike.renderer;
 import javafx.scene.control.Control;
 import javafx.scene.layout.Pane;
 import knc.roguelike.model.entity.Entity;
+import knc.roguelike.model.entity.component.Type;
 import knc.roguelike.model.world.Tile;
 
 /**
@@ -26,10 +27,9 @@ class RenderTile extends Pane {
     }
 
     /**
-     * Render the provided {@link knc.roguelike.model.world.Tile} by getting the {@link knc.roguelike.model.entity.Ground},
-     * {@link knc.roguelike.model.entity.Creature} and {@link knc.roguelike.model.entity.Item} contained in the provided tile.
-     * Rendering priority is: Creature > Item > Ground. Background is always applied from Ground if present.
-     * @param tile The tile that should be displayed
+     * Render the provided {@link knc.roguelike.model.world.Tile} by reading the associated entities.
+     * Rendering priority is: Creature > Item > Terrain. Background is always applied if present.
+     * @param tile The tile that should be rendered
      */
     void setTile(Tile tile) {
         getChildren().clear();
@@ -38,18 +38,14 @@ class RenderTile extends Pane {
             return;
         }
 
-        if(tile.hasGround()){
-            setBackground(tile.getGround().getBackground());
-        }
+        setBackground(tile.getBackground());
 
         Entity entity;
 
-        if(tile.hasCreature()){
-            entity = tile.getCreature();
-        } else if(tile.hasItems()){
-            entity = tile.getTopItem();
-        } else if(tile.hasGround()){
-            entity = tile.getGround();
+        if(tile.hasEntityWithComponent(Type.LIVING)){
+            entity = tile.getEntityByComponent(Type.LIVING);
+        } else if(tile.hasEntityWithComponent(Type.TERRAIN)){
+            entity = tile.getEntityByComponent(Type.TERRAIN);
         } else {
             return;
         }

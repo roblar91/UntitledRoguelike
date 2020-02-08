@@ -6,7 +6,6 @@
 
 package knc.roguelike.model.world;
 
-import knc.roguelike.model.entity.Creature;
 import knc.roguelike.model.entity.Entity;
 
 public class Area {
@@ -40,8 +39,8 @@ public class Area {
 
         // todo: collision check
 
-        originTile.setCreature(null);
-        targetTile.setCreature((Creature) target);
+        originTile.removeEntity(target);
+        targetTile.addEntity(target);
         target.setPosition(target.getPosX() + dX, target.getPosY() + dY);
     }
 }

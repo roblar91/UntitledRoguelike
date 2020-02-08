@@ -14,9 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import knc.roguelike.action.ActionQueue;
 import knc.roguelike.input.KeyboardHandler;
-import knc.roguelike.model.entity.Attitude;
-import knc.roguelike.model.entity.Creature;
-import knc.roguelike.model.entity.Ground;
+import knc.roguelike.model.entity.Entity;
+import knc.roguelike.model.entity.Position;
+import knc.roguelike.model.entity.component.LivingComponent;
+import knc.roguelike.model.entity.component.TerrainComponent;
 import knc.roguelike.model.world.Area;
 import knc.roguelike.renderer.Renderer;
 
@@ -26,28 +27,33 @@ public class Game extends Application {
     private Scene currentScene;
     private Renderer gamePane;
     private Area currentArea;
-    private Creature player;
+    private Entity player;
     private KeyboardHandler keyboardHandler;
 
     public void start(Stage stage) throws Exception {
-        player = new Creature(new Image("sprites/curses/curses_16x16_1.png"), Attitude.PLAYER, Color.YELLOW);
 
         // Create a test area
         currentArea = new Area(50, 50);
         var tiles = currentArea.getTiles();
         for(int x=0; x < tiles.length; x++) {
             for(int y=0; y < tiles[0].length; y++) {
-                var ground = new Ground(new Image("sprites/curses/curses_16x16_250.png"));
-                ground.setBackgroundColor(Color.BROWN);
-                ground.setPosition(x, y);
-                tiles[x][y].setGround(ground);
+                var position = new Position(currentArea, x, y);
+                var entity = new Entity(position, new Image("sprites/curses/curses_16x16_250.png"));
+                var terrain = new TerrainComponent(false);
+                entity.addComponent(terrain);
+                tiles[x][y].setBackgroundColor(Color.BROWN);
+                tiles[x][y].addEntity(entity);
             }
         }
-        currentArea.getTile(2, 2).setCreature(player);
-        player.setPosition(2, 2);
+
+        var playerPosition = new Position(currentArea, 5, 5);
+        player = new Entity(playerPosition, new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW);
+        var living = new LivingComponent();
+        player.addComponent(living);
+        tiles[player.getPosX()][player.getPosY()].addEntity(player);
 
         gamePane = new Renderer(currentArea, 25, 25, 32);
-        gamePane.render();
+        gamePane.renderAll();
         currentScene = new Scene(gamePane);
 
         stage.setScene(currentScene);
@@ -66,7 +72,7 @@ public class Game extends Application {
                     update = true;
                 }
                 if(update) {
-                    gamePane.render();
+                    gamePane.renderAll();
                 }
                 keyboardHandler.setInputDefault();
             }
@@ -85,7 +91,7 @@ public class Game extends Application {
         return currentArea;
     }
 
-    public Creature getPlayer() {
+    public Entity getPlayer() {
         return player;
     }
 }

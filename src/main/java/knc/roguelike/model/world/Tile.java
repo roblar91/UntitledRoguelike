@@ -6,63 +6,54 @@
 
 package knc.roguelike.model.world;
 
-import knc.roguelike.model.entity.Creature;
-import knc.roguelike.model.entity.Ground;
-import knc.roguelike.model.entity.Item;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
+import knc.roguelike.model.entity.Entity;
+import knc.roguelike.model.entity.component.Type;
 
 import java.util.ArrayList;
 
 public class Tile {
-    private Ground ground;
-    private Creature creature;
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
+    private Background background;
 
-    public Ground getGround() {
-        return ground;
+    public Tile() {
+        this(Color.BLACK);
     }
 
-    public boolean hasGround() {
-        return ground != null;
+    public Tile(Color backgroundColor) {
+        setBackgroundColor(backgroundColor);
     }
 
-    public void setGround(Ground ground) {
-        this.ground = ground;
+    public void setBackgroundColor(Color color) {
+        background = new Background(new BackgroundFill(color, null, null));
     }
 
-    public boolean hasCreature() {
-        return creature != null;
+    public Background getBackground() {
+        return background;
     }
 
-    public Creature getCreature() {
-        return creature;
+    public void addEntity(Entity entity) {
+        entities.add(entity);
     }
 
-    public void setCreature(Creature creature) {
-        this.creature = creature;
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 
-    public boolean hasItems() {
-        return items.size() > 0;
+    public boolean hasEntityWithComponent(Type type) {
+        return getEntityByComponent(type) != null;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
-    }
+    public Entity getEntityByComponent(Type type) {
+        for(Entity entity: entities) {
+            if(entity.getComponent(type) != null) {
+                return entity;
+            }
+        }
 
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-    }
-
-    public void addItem(Item item) {
-        items.add(item);
-    }
-
-    public void removeItem(Item item) {
-        items.remove(item);
-    }
-
-    public Item getTopItem() {
-        return items.get(items.size() - 1);
+        return null;
     }
 }
 
