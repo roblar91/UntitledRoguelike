@@ -6,9 +6,9 @@
 
 package knc.roguelike.model.entity.component;
 
-public class TerrainComponent implements Component {
+public class SolidComponent implements Component {
     @Override
     public Type getType() {
-        return Type.TERRAIN;
+        return Type.SOLID;
     }
 }

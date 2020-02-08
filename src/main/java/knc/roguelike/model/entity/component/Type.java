@@ -10,5 +10,8 @@ public enum Type {
     PLAYER,
     LIVING,
     TERRAIN,
-    ITEM;
+    ITEM,
+    SOLID,
+    SPRITE,
+    BACKGROUND;
 }

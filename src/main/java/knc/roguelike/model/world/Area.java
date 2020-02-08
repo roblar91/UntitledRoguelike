@@ -34,13 +34,14 @@ public class Area {
     }
 
     public void move(Entity target, int dX, int dY) {
-        var originTile = tiles[target.getPosX()][target.getPosY()];
-        var targetTile = tiles[target.getPosX() + dX][target.getPosY() + dY];
+        var originTile = tiles[target.position.posX][target.position.posY];
+        var targetTile = tiles[target.position.posX + dX][target.position.posY + dY];
 
         // todo: collision check
 
         originTile.removeEntity(target);
         targetTile.addEntity(target);
-        target.setPosition(target.getPosX() + dX, target.getPosY() + dY);
+        target.position.posX += dX;
+        target.position.posY += dY;
     }
 }

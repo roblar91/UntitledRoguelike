@@ -16,8 +16,7 @@ import knc.roguelike.action.ActionQueue;
 import knc.roguelike.input.KeyboardHandler;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.Position;
-import knc.roguelike.model.entity.component.LivingComponent;
-import knc.roguelike.model.entity.component.TerrainComponent;
+import knc.roguelike.model.entity.component.*;
 import knc.roguelike.model.world.Area;
 import knc.roguelike.renderer.Renderer;
 
@@ -38,19 +37,20 @@ public class Game extends Application {
         for(int x=0; x < tiles.length; x++) {
             for(int y=0; y < tiles[0].length; y++) {
                 var position = new Position(currentArea, x, y);
-                var entity = new Entity(position, new Image("sprites/curses/curses_16x16_250.png"));
-                var terrain = new TerrainComponent(false);
-                entity.addComponent(terrain);
-                tiles[x][y].setBackgroundColor(Color.BROWN);
+                var entity = new Entity(position);
+                entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_250.png")));
+                entity.addComponent(new TerrainComponent());
+                entity.addComponent(new BackgroundComponent(Color.BROWN));
                 tiles[x][y].addEntity(entity);
             }
         }
 
         var playerPosition = new Position(currentArea, 5, 5);
-        player = new Entity(playerPosition, new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW);
-        var living = new LivingComponent();
-        player.addComponent(living);
-        tiles[player.getPosX()][player.getPosY()].addEntity(player);
+        player = new Entity(playerPosition);
+        player.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
+        player.addComponent(new LivingComponent());
+        player.addComponent(new SolidComponent());
+        tiles[player.position.posX][player.position.posY].addEntity(player);
 
         gamePane = new Renderer(currentArea, 25, 25, 32);
         gamePane.renderAll();

@@ -9,6 +9,8 @@ package knc.roguelike.renderer;
 import javafx.scene.control.Control;
 import javafx.scene.layout.Pane;
 import knc.roguelike.model.entity.Entity;
+import knc.roguelike.model.entity.component.BackgroundComponent;
+import knc.roguelike.model.entity.component.SpriteComponent;
 import knc.roguelike.model.entity.component.Type;
 import knc.roguelike.model.world.Tile;
 
@@ -38,8 +40,13 @@ class RenderTile extends Pane {
             return;
         }
 
-        setBackground(tile.getBackground());
+        if(tile.hasEntityWithComponent(Type.BACKGROUND)){
+            var terrain = tile.getEntityByComponent(Type.BACKGROUND);
+            var bg = (BackgroundComponent) terrain.getComponent(Type.BACKGROUND);
+            setBackground(bg.getBackground());
+        }
 
+        // todo: render everything with a sprite
         Entity entity;
 
         if(tile.hasEntityWithComponent(Type.LIVING)){
@@ -50,7 +57,8 @@ class RenderTile extends Pane {
             return;
         }
 
-        var imageView = entity.getImageView();
+        var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
+        var imageView = sprite.getImageView();
         imageView.setFitWidth(getPrefWidth());
         imageView.setFitHeight(getPrefHeight());
         getChildren().add(imageView);
