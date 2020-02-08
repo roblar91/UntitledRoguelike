@@ -6,13 +6,9 @@
 
 package knc.roguelike.model.entity.component;
 
-public enum Type {
-    PLAYER,
-    ALIVE,
-    TERRAIN,
-    ITEM,
-    SOLID,
-    SPRITE,
-    BACKGROUND,
-    MOBILE;
+public class AliveComponent implements Component {
+    @Override
+    public Type getType() {
+        return Type.ALIVE;
+    }
 }

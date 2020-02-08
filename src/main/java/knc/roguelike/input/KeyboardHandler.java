@@ -30,35 +30,35 @@ public class KeyboardHandler {
                 System.exit(0);
             }
             else if(code == KeyCode.UP || code == KeyCode.NUMPAD8) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), 0, -1);
+                var moveUp = new MoveAction(game.getPlayer(), 0, -1);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.DOWN || code == KeyCode.NUMPAD2) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), 0, 1);
+                var moveUp = new MoveAction(game.getPlayer(), 0, 1);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.LEFT || code == KeyCode.NUMPAD4) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), -1, 0);
+                var moveUp = new MoveAction(game.getPlayer(), -1, 0);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.RIGHT || code == KeyCode.NUMPAD6) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), 1, 0);
+                var moveUp = new MoveAction(game.getPlayer(), 1, 0);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.NUMPAD7) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), -1, -1);
+                var moveUp = new MoveAction(game.getPlayer(), -1, -1);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.NUMPAD9) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), 1, -1);
+                var moveUp = new MoveAction(game.getPlayer(), 1, -1);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.NUMPAD1) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), -1, 1);
+                var moveUp = new MoveAction(game.getPlayer(), -1, 1);
                 ActionQueue.actions.add(moveUp);
             }
             else if(code == KeyCode.NUMPAD3) {
-                var moveUp = new MoveAction(game.getCurrentArea(), game.getPlayer(), 1, 1);
+                var moveUp = new MoveAction(game.getPlayer(), 1, 1);
                 ActionQueue.actions.add(moveUp);
             }
 

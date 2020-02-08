@@ -6,8 +6,6 @@
 
 package knc.roguelike.model.world;
 
-import knc.roguelike.model.entity.Entity;
-
 public class Area {
     private Tile[][] tiles;
 
@@ -31,17 +29,5 @@ public class Area {
         } catch(ArrayIndexOutOfBoundsException e) {
             return null;
         }
-    }
-
-    public void move(Entity target, int dX, int dY) {
-        var originTile = tiles[target.position.posX][target.position.posY];
-        var targetTile = tiles[target.position.posX + dX][target.position.posY + dY];
-
-        // todo: collision check
-
-        originTile.removeEntity(target);
-        targetTile.addEntity(target);
-        target.position.posX += dX;
-        target.position.posY += dY;
     }
 }

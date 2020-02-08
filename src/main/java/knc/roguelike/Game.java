@@ -48,8 +48,9 @@ public class Game extends Application {
         var playerPosition = new Position(currentArea, 5, 5);
         player = new Entity(playerPosition);
         player.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
-        player.addComponent(new LivingComponent());
+        player.addComponent(new AliveComponent());
         player.addComponent(new SolidComponent());
+        player.addComponent(new MobileComponent());
         tiles[player.position.posX][player.position.posY].addEntity(player);
 
         gamePane = new Renderer(currentArea, 25, 25, 32);
@@ -68,8 +69,12 @@ public class Game extends Application {
             public void handle(long now) {
                 var update = false;
                 while(!ActionQueue.actions.isEmpty()) {
-                    ActionQueue.actions.poll().execute();
-                    update = true;
+                    try {
+                        ActionQueue.actions.poll().execute();
+                        update = true;
+                    } catch(Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 if(update) {
                     gamePane.renderAll();

@@ -49,8 +49,8 @@ class RenderTile extends Pane {
         // todo: render everything with a sprite
         Entity entity;
 
-        if(tile.hasEntityWithComponent(Type.LIVING)){
-            entity = tile.getEntityByComponent(Type.LIVING);
+        if(tile.hasEntityWithComponent(Type.ALIVE)){
+            entity = tile.getEntityByComponent(Type.ALIVE);
         } else if(tile.hasEntityWithComponent(Type.TERRAIN)){
             entity = tile.getEntityByComponent(Type.TERRAIN);
         } else {

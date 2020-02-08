@@ -6,9 +6,9 @@
 
 package knc.roguelike.model.entity.component;
 
-public class LivingComponent implements Component {
+public class MobileComponent implements Component {
     @Override
     public Type getType() {
-        return Type.LIVING;
+        return Type.MOBILE;
     }
 }

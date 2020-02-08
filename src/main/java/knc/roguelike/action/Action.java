@@ -7,5 +7,5 @@
 package knc.roguelike.action;
 
 public interface Action {
-    void execute();
+    void execute() throws Exception;
 }
