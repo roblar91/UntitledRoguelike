@@ -9,9 +9,9 @@ package knc.roguelike;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import knc.roguelike.input.KeyboardHandler;
 import knc.roguelike.model.entity.Attitude;
 import knc.roguelike.model.entity.Creature;
 import knc.roguelike.model.entity.Ground;
@@ -20,22 +20,15 @@ import knc.roguelike.model.world.Tile;
 import knc.roguelike.renderer.Renderer;
 
 public class Game extends Application {
-    public static Stage stage;
-    public static Scene scene;
-    public static Pane mainPane;
-    public static Pane statusPane;
-    public static Pane toolPane;
-
     public void start(Stage stage) throws Exception {
         var area = createTestArea();
         var root = new Renderer(area, 25, 25, 32);
         root.render();
-        Game.stage = stage;
-        Game.scene = new Scene(root);
-        Game.stage.setScene(Game.scene);
-        Game.stage.setTitle("Untitled Roguelike");
-        Game.stage.setAlwaysOnTop(true);
-        Game.stage.show();
+        var scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Untitled Roguelike");
+        stage.show();
+        var keyboardHandler = new KeyboardHandler(scene);
     }
 
     private Area createTestArea() {

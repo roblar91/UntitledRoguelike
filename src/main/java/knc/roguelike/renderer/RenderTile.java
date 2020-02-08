@@ -7,7 +7,6 @@
 package knc.roguelike.renderer;
 
 import javafx.scene.control.Control;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.world.Tile;
@@ -15,12 +14,12 @@ import knc.roguelike.model.world.Tile;
 /**
  * A graphical representation of a {@link knc.roguelike.model.world.Tile} meant to be used by {@link knc.roguelike.renderer.Renderer}.
  */
-class ViewTile extends Pane {
+class RenderTile extends Pane {
     /**
      *
      * @param size The horizontal and vertical size of the tile in pixels
      */
-    ViewTile(int size) {
+    RenderTile(int size) {
         setPrefSize(size, size);
         setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
@@ -55,9 +54,9 @@ class ViewTile extends Pane {
             return;
         }
 
-        var sprite = entity.getSpriteView();
-        sprite.setFitWidth(getPrefWidth());
-        sprite.setFitHeight(getPrefHeight());
-        getChildren().add(sprite);
+        var imageView = entity.getImageView();
+        imageView.setFitWidth(getPrefWidth());
+        imageView.setFitHeight(getPrefHeight());
+        getChildren().add(imageView);
     }
 }

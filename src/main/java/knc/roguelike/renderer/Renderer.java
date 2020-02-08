@@ -17,7 +17,7 @@ import knc.roguelike.model.world.Area;
  * A Renderer is used to render part of an {@link knc.roguelike.model.world.Area}.
  */
 public class Renderer extends Pane{
-    private final ViewTile[][] viewTiles;
+    private final RenderTile[][] renderTiles;
     private final Area area;
     private final int horizontalTiles;
     private final int verticalTiles;
@@ -36,13 +36,13 @@ public class Renderer extends Pane{
         this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
 
-        this.viewTiles = new ViewTile[horizontalTiles][verticalTiles];
+        this.renderTiles = new RenderTile[horizontalTiles][verticalTiles];
         for(int x=0; x<horizontalTiles; x++) {
             for(int y=0; y<verticalTiles; y++) {
-                var tile = new ViewTile(tileSize);
+                var tile = new RenderTile(tileSize);
                 tile.setTranslateX(x * tileSize);
                 tile.setTranslateY(y * tileSize);
-                viewTiles[x][y] = tile;
+                renderTiles[x][y] = tile;
                 getChildren().add(tile);
             }
         }
@@ -82,7 +82,7 @@ public class Renderer extends Pane{
         for(int x = 0; x< horizontalTiles; x++) {
             for(int y = 0; y< verticalTiles; y++) {
                 var tile = area.getTile(x+cameraX, y+cameraY);
-                viewTiles[x][y].setTile(tile);
+                renderTiles[x][y].setTile(tile);
             }
         }
     }

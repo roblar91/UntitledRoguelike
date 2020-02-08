@@ -14,16 +14,16 @@ import javafx.scene.paint.Color;
 public class Ground extends Entity {
     private Background background;
 
-    public Ground(Image sprite) {
-        this(sprite, Color.BLACK, null);
+    public Ground(Image image) {
+        this(image, Color.BLACK, null);
     }
 
-    public Ground(Image sprite, Color backgroundColor) {
-        this(sprite, backgroundColor, null);
+    public Ground(Image image, Color backgroundColor) {
+        this(image, backgroundColor, null);
     }
 
-    public Ground(Image sprite, Color backgroundColor, Color color) {
-        super(sprite, color);
+    public Ground(Image image, Color backgroundColor, Color color) {
+        super(image, color);
         setBackgroundColor(backgroundColor);
     }
 

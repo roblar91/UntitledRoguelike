@@ -10,11 +10,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Item extends Entity {
-    public Item(Image sprite) {
-        this(sprite, null);
+    public Item(Image image) {
+        this(image, null);
     }
 
-    public Item(Image sprite, Color color) {
-        super(sprite, color);
+    public Item(Image image, Color color) {
+        super(image, color);
     }
 }

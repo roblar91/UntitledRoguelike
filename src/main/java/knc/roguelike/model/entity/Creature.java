@@ -12,12 +12,12 @@ import javafx.scene.paint.Color;
 public class Creature extends Entity {
     private Attitude attitude;
 
-    public Creature(Image sprite, Attitude attitude) {
-        this(sprite, attitude, null);
+    public Creature(Image image, Attitude attitude) {
+        this(image, attitude, null);
     }
 
-    public Creature(Image sprite, Attitude attitude, Color color) {
-        super(sprite, color);
+    public Creature(Image image, Attitude attitude, Color color) {
+        super(image, color);
         this.attitude = attitude;
     }
 
