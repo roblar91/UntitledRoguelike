@@ -15,11 +15,15 @@ public class Ground extends Entity {
     private Background background;
 
     public Ground(Image sprite) {
-        this(sprite, Color.BLACK);
+        this(sprite, Color.BLACK, null);
     }
 
     public Ground(Image sprite, Color backgroundColor) {
-        super(sprite);
+        this(sprite, backgroundColor, null);
+    }
+
+    public Ground(Image sprite, Color backgroundColor, Color color) {
+        super(sprite, color);
         setBackgroundColor(backgroundColor);
     }
 

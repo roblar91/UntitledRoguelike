@@ -9,6 +9,7 @@ package knc.roguelike.renderer;
 import javafx.scene.control.Control;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.world.Tile;
 
 /**
@@ -42,18 +43,19 @@ class ViewTile extends Pane {
             setBackground(tile.getGround().getBackground());
         }
 
-        ImageView sprite;
+        Entity entity;
 
         if(tile.hasCreature()){
-            sprite = tile.getCreature().getSpriteView();
+            entity = tile.getCreature();
         } else if(tile.hasItems()){
-            sprite = tile.getTopItem().getSpriteView();
+            entity = tile.getTopItem();
         } else if(tile.hasGround()){
-            sprite = tile.getGround().getSpriteView();
+            entity = tile.getGround();
         } else {
             return;
         }
 
+        var sprite = entity.getSpriteView();
         sprite.setFitWidth(getPrefWidth());
         sprite.setFitHeight(getPrefHeight());
         getChildren().add(sprite);
