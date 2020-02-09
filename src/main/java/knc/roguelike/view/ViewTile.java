@@ -22,7 +22,6 @@ class ViewTile extends StackPane {
     private final Background defaultBackground;
 
     /**
-     *
      * @param size The horizontal and vertical size of the tile in pixels
      */
     ViewTile(int size, Background defaultBackground) {

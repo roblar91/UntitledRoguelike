@@ -12,22 +12,43 @@ import knc.roguelike.model.entity.component.Type;
 
 import java.util.ArrayList;
 
+/**
+ * An Entity is any object in the world.
+ * The characteristics of an Entity is specified by assigning various {@link Component} to it.
+ */
 public class Entity {
     private ArrayList<Component> components = new ArrayList<>();
     public Position position;
 
+    /**
+     * @param position The location of this Entity in the game world
+     */
     public Entity(Position position) {
         this.position = position;
     }
 
+    /**
+     * Assigns a {@link Component} to this Entity.
+     * @param component The component to assign
+     */
     public void addComponent(Component component) {
         components.add(component);
     }
 
+    /**
+     * Checks if the specified {@link Component} {@link Type} is present in this Entity.
+     * @param type The type to check for
+     * @return True if component is present
+     */
     public boolean hasComponent(Type type) {
         return getComponent(type) != null;
     }
 
+    /**
+     * Gets a {@link Component} of the specified {@link Type}. If not present, will return null.
+     * @param type The type to return
+     * @return The component
+     */
     public Component getComponent(Type type) {
         for(Component component : components) {
             if(component.getType() == type) {
@@ -38,6 +59,12 @@ public class Entity {
         return null;
     }
 
+    /**
+     * Attempts to move this Entity in its current area. If the move is not possible an exception is thrown.
+     * @param dX The change in X coordinates
+     * @param dY The change in Y coordinates
+     * @throws IllegalActionException Thrown if the move is not possible
+     */
     public void move(int dX, int dY) throws IllegalActionException {
         if(!hasComponent(Type.MOBILE)) {
             throw new IllegalActionException("Unable to move");

@@ -30,7 +30,6 @@ public class ViewPort extends Pane{
     private ChangeListener<Number> followListener;
 
     /**
-     *
      * @param area The {@link Area} that should be rendered
      * @param horizontalTiles Number of horizontal tiles that should be rendered
      * @param verticalTiles Number of vertical tiles that should be rendered
