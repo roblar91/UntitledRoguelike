@@ -14,5 +14,7 @@ public enum Type {
     SOLID,
     SPRITE,
     BACKGROUND,
-    MOBILE;
+    MOBILE,
+    ENTRANCE,
+    EXIT;
 }

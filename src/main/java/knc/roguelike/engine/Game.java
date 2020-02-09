@@ -13,12 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import knc.roguelike.action.Action;
+import knc.roguelike.model.entity.action.Action;
 import knc.roguelike.input.KeyboardHandler;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.Position;
 import knc.roguelike.model.entity.component.*;
 import knc.roguelike.model.world.Area;
+import knc.roguelike.model.world.generation.Generator;
 import knc.roguelike.view.ViewPort;
 
 import java.util.Queue;
@@ -39,7 +40,8 @@ public class Game extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
 
-        createTestArea();
+        //createTestArea();
+        initArea();
         initView();
         initInput();
 
@@ -80,6 +82,18 @@ public class Game extends Application {
 
     public KeyboardHandler getKeyboardHandler() {
         return keyboardHandler;
+    }
+
+    private void initArea() {
+        currentArea = Generator.getArea(1);
+        var entrance = currentArea.getEntrance();
+        var playerPosition = new Position(currentArea, entrance.position.posX.get(), entrance.position.posY.get());
+        player = new Entity(playerPosition);
+        player.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
+        player.addComponent(new AliveComponent());
+        player.addComponent(new SolidComponent());
+        player.addComponent(new MobileComponent());
+        currentArea.getTile(playerPosition.posX.get(), playerPosition.posY.get());
     }
 
     private void initView() {

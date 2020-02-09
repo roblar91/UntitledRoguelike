@@ -4,7 +4,7 @@
  *
  */
 
-package knc.roguelike.action;
+package knc.roguelike.model.entity.action;
 
 import knc.roguelike.exception.IllegalActionException;
 import knc.roguelike.model.entity.Entity;

@@ -8,7 +8,7 @@ package knc.roguelike.input;
 
 import javafx.scene.input.KeyCode;
 import knc.roguelike.engine.Game;
-import knc.roguelike.action.MoveAction;
+import knc.roguelike.model.entity.action.MoveAction;
 
 public class KeyboardHandler {
     private Game game;

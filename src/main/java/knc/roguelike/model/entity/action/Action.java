@@ -4,7 +4,7 @@
  *
  */
 
-package knc.roguelike.action;
+package knc.roguelike.model.entity.action;
 
 /**
  * An {@link Action} is an encapsulated behaviour that can be executed at a later time.
