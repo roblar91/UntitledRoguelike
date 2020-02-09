@@ -7,7 +7,7 @@
 package knc.roguelike.model.entity.component;
 
 /**
- * A component represents a characteristic of an object.
+ * A {@link Component} represents a characteristic of an object.
  */
 public interface Component {
     Type getType();

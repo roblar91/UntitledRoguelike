@@ -7,7 +7,7 @@
 package knc.roguelike.model.world;
 
 /**
- * An Area represents a level in the game world and stores all {@link Tile}s relevant to it.
+ * An {@link Area} represents a level in the game world and stores all {@link Tile}s relevant to it.
  */
 public class Area {
     private Tile[][] tiles;

@@ -7,7 +7,7 @@
 package knc.roguelike.action;
 
 /**
- * An action is an encapsulated behaviour that can be executed at a later time.
+ * An {@link Action} is an encapsulated behaviour that can be executed at a later time.
  */
 public interface Action {
     void execute() throws Exception;

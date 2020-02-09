@@ -16,7 +16,7 @@ import knc.roguelike.model.entity.component.Type;
 import knc.roguelike.model.world.Tile;
 
 /**
- * A graphical representation of a {@link Tile} meant to be used by {@link ViewPort}.
+ * A graphical representation of a {@link Tile} meant to be used with {@link ViewPort}.
  */
 class ViewTile extends StackPane {
     private final Background defaultBackground;

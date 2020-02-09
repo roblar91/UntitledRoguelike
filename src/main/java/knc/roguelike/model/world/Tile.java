@@ -12,7 +12,7 @@ import knc.roguelike.model.entity.component.Type;
 import java.util.ArrayList;
 
 /**
- * A Tile is a unit of space in the game world.
+ * A {@link Tile} is a unit of space in the game world.
  */
 public class Tile {
     private ArrayList<Entity> entities = new ArrayList<>();

@@ -16,7 +16,7 @@ import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.world.Area;
 
 /**
- * A Renderer is used to render part of an {@link Area}.
+ * A {@link ViewPort} is used to render part of an {@link Area}.
  */
 public class ViewPort extends Pane{
     private final Background defaultBackground;

@@ -11,7 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import knc.roguelike.model.world.Area;
 
 /**
- * Position is meant for storing the positional data of an {@link Entity}.
+ * {@link Position} is meant for storing the positional data of an {@link Entity}.
  * The X and Y coordinates are stored as {@link IntegerProperty} so that they can be used for data binding.
  */
 public class Position {
