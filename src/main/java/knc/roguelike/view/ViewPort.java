@@ -6,7 +6,6 @@
 
 package knc.roguelike.view;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Control;
 import javafx.scene.layout.Background;
@@ -27,6 +26,8 @@ public class ViewPort extends Pane{
     private final int verticalTiles;
     private int cameraX;
     private int cameraY;
+    private Entity followTarget;
+    private ChangeListener<Number> followListener;
 
     /**
      *
@@ -70,6 +71,11 @@ public class ViewPort extends Pane{
         cameraY = y;
     }
 
+    /**
+     * Sets the camera to center in on a tile in the associated {@link Area}.
+     * @param x The horizontal index
+     * @param y The vertical index
+     */
     public void setCameraCenter(int x, int y) {
         cameraX = x - horizontalTiles / 2;
         cameraY = y - verticalTiles / 2;
@@ -97,13 +103,41 @@ public class ViewPort extends Pane{
         }
     }
 
+    /**
+     * Sets the camera to follow a specific {@link Entity}.
+     * Passing in a null parameter will cause the camera to stop following.
+     * @param entity The target to follow
+     */
     public void setFollowTarget(Entity entity) {
-        ChangeListener<Number> changeListener = (obs, oldV, newV) -> {
+        if(followTarget != null) {
+            followTarget.position.posX.removeListener(followListener);
+            followTarget.position.posY.removeListener(followListener);
+        }
+
+        followTarget = null;
+        followListener = null;
+
+        if(entity == null) {
+            return;
+        }
+
+        followTarget = entity;
+        followListener = (obs, oldV, newV) -> {
             setCameraCenter(entity.position.posX.get(), entity.position.posY.get());
         };
 
-        changeListener.changed(null, null, null);
-        entity.position.posX.addListener(changeListener);
-        entity.position.posY.addListener(changeListener);
+        entity.position.posX.addListener(followListener);
+        entity.position.posY.addListener(followListener);
+
+        setCameraCenter(entity.position.posX.get(), entity.position.posY.get());
+        updateAll();
+    }
+
+    /**
+     * Gets the target currently being followed by the camera, if any.
+     * @return Current follow target
+     */
+    public Entity getFollowTarget() {
+        return followTarget;
     }
 }

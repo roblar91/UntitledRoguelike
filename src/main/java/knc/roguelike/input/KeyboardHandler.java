@@ -61,6 +61,12 @@ public class KeyboardHandler {
                 var moveUp = new MoveAction(game.getPlayer(), 1, 1);
                 ActionQueue.actions.add(moveUp);
             }
+            else if(code == KeyCode.T) {
+                if(game.getViewPort().getFollowTarget() == null)
+                    game.getViewPort().setFollowTarget(game.getPlayer());
+                else
+                    game.getViewPort().setFollowTarget(null);
+            }
 
             if(!ActionQueue.actions.isEmpty()) {
                 setInputBlocked();

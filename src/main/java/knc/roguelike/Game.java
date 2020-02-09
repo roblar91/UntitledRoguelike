@@ -24,7 +24,7 @@ import knc.roguelike.view.ViewPort;
 public class Game extends Application {
     private Stage stage;
     private Scene currentScene;
-    private ViewPort gamePane;
+    private ViewPort viewPort;
     private Area currentArea;
     private Entity player;
     private KeyboardHandler keyboardHandler;
@@ -82,10 +82,10 @@ public class Game extends Application {
         tiles[wallPosition3.posX.get()][wallPosition3.posY.get()].addEntity(wall3);
 
 
-        gamePane = new ViewPort(currentArea, 25, 25, 32);
-        gamePane.setFollowTarget(player);
-        gamePane.updateAll();
-        currentScene = new Scene(gamePane);
+        viewPort = new ViewPort(currentArea, 25, 25, 32);
+        viewPort.setFollowTarget(player);
+        viewPort.updateAll();
+        currentScene = new Scene(viewPort);
 
         stage.setScene(currentScene);
         stage.setTitle("Untitled Roguelike");
@@ -107,7 +107,7 @@ public class Game extends Application {
                     }
                 }
                 if(update) {
-                    gamePane.updateAll();
+                    viewPort.updateAll();
                 }
                 keyboardHandler.setInputDefault();
             }
@@ -122,11 +122,19 @@ public class Game extends Application {
         return currentScene;
     }
 
+    public ViewPort getViewPort() {
+        return viewPort;
+    }
+
     public Area getCurrentArea() {
         return currentArea;
     }
 
     public Entity getPlayer() {
         return player;
+    }
+
+    public KeyboardHandler getKeyboardHandler() {
+        return keyboardHandler;
     }
 }
