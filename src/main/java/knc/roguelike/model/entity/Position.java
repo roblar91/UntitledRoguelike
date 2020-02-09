@@ -6,16 +6,23 @@
 
 package knc.roguelike.model.entity;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import knc.roguelike.model.world.Area;
 
 public class Position {
     public Area area;
-    public int posX;
-    public int posY;
+    public IntegerProperty posX;
+    public IntegerProperty posY;
 
     public Position(Area area, int posX, int posY) {
         this.area = area;
-        this.posX = posX;
-        this.posY = posY;
+        this.posX = new SimpleIntegerProperty(posX);
+        this.posY = new SimpleIntegerProperty(posY);
+    }
+
+    public void move(int dX, int dY) {
+        posX.set(posX.get() + dX);
+        posY.set(posY.get() + dY);
     }
 }

@@ -6,17 +6,21 @@
 
 package knc.roguelike.view;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Control;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.world.Area;
 
 /**
  * A Renderer is used to render part of an {@link Area}.
  */
 public class ViewPort extends Pane{
+    private final Background defaultBackground;
     private final ViewTile[][] viewTiles;
     private final Area area;
     private final int horizontalTiles;
@@ -32,6 +36,7 @@ public class ViewPort extends Pane{
      * @param tileSize Size of each tile, in pixels
      */
     public ViewPort(Area area, int horizontalTiles, int verticalTiles, int tileSize) {
+        this.defaultBackground = new Background(new BackgroundFill(Color.BLACK, null, null));
         this.setPrefSize(horizontalTiles * tileSize, verticalTiles * tileSize);
         this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
@@ -39,7 +44,7 @@ public class ViewPort extends Pane{
         this.viewTiles = new ViewTile[horizontalTiles][verticalTiles];
         for(int x=0; x<horizontalTiles; x++) {
             for(int y=0; y<verticalTiles; y++) {
-                var tile = new ViewTile(tileSize);
+                var tile = new ViewTile(tileSize, defaultBackground);
                 tile.setTranslateX(x * tileSize);
                 tile.setTranslateY(y * tileSize);
                 viewTiles[x][y] = tile;
@@ -52,7 +57,7 @@ public class ViewPort extends Pane{
         this.verticalTiles = verticalTiles;
         this.cameraX = 0;
         this.cameraY = 0;
-        this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        this.setBackground(defaultBackground);
     }
 
     /**
@@ -63,6 +68,11 @@ public class ViewPort extends Pane{
     public void setCamera(int x, int y) {
         cameraX = x;
         cameraY = y;
+    }
+
+    public void setCameraCenter(int x, int y) {
+        cameraX = x - horizontalTiles / 2;
+        cameraY = y - verticalTiles / 2;
     }
 
     /**
@@ -85,5 +95,15 @@ public class ViewPort extends Pane{
                 viewTiles[x][y].setTile(tile);
             }
         }
+    }
+
+    public void setFollowTarget(Entity entity) {
+        ChangeListener<Number> changeListener = (obs, oldV, newV) -> {
+            setCameraCenter(entity.position.posX.get(), entity.position.posY.get());
+        };
+
+        changeListener.changed(null, null, null);
+        entity.position.posX.addListener(changeListener);
+        entity.position.posY.addListener(changeListener);
     }
 }

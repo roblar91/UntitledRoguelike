@@ -43,8 +43,8 @@ public class Entity {
             throw new IllegalActionException("Unable to move");
         }
 
-        var originTile = position.area.getTile(position.posX, position.posY);
-        var targetTile = position.area.getTile(position.posX + dX, position.posY + dY);
+        var originTile = position.area.getTile(position.posX.get(), position.posY.get());
+        var targetTile = position.area.getTile(position.posX.get() + dX, position.posY.get() + dY);
 
         if(targetTile == null) {
             throw new IllegalActionException("Out of bounds");
@@ -57,7 +57,6 @@ public class Entity {
 
         originTile.removeEntity(this);
         targetTile.addEntity(this);
-        position.posX += dX;
-        position.posY += dY;
+        position.move(dX, dY);
     }
 }

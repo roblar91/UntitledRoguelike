@@ -7,7 +7,7 @@
 package knc.roguelike.view;
 
 import javafx.scene.control.Control;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.component.BackgroundComponent;
@@ -19,11 +19,14 @@ import knc.roguelike.model.world.Tile;
  * A graphical representation of a {@link Tile} meant to be used by {@link ViewPort}.
  */
 class ViewTile extends StackPane {
+    private final Background defaultBackground;
+
     /**
      *
      * @param size The horizontal and vertical size of the tile in pixels
      */
-    ViewTile(int size) {
+    ViewTile(int size, Background defaultBackground) {
+        this.defaultBackground = defaultBackground;
         setPrefSize(size, size);
         setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
@@ -38,6 +41,7 @@ class ViewTile extends StackPane {
         getChildren().clear();
 
         if(tile == null) {
+            setBackground(defaultBackground);
             return;
         }
 
@@ -45,6 +49,8 @@ class ViewTile extends StackPane {
             var terrain = tile.getEntityByComponent(Type.BACKGROUND);
             var bg = (BackgroundComponent) terrain.getComponent(Type.BACKGROUND);
             setBackground(bg.getBackground());
+        } else {
+            setBackground(defaultBackground);
         }
 
         if(tile.hasEntityWithComponent(Type.ALIVE)){

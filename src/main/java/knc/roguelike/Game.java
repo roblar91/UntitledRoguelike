@@ -51,7 +51,7 @@ public class Game extends Application {
         player.addComponent(new AliveComponent());
         player.addComponent(new SolidComponent());
         player.addComponent(new MobileComponent());
-        tiles[player.position.posX][player.position.posY].addEntity(player);
+        tiles[player.position.posX.get()][player.position.posY.get()].addEntity(player);
 
         var wallImage = new Image("sprites/curses/curses_16x16_35.png");
         var wallPosition1 = new Position(currentArea, 2, 3);
@@ -60,8 +60,8 @@ public class Game extends Application {
         wall1.addComponent(new BackgroundComponent(Color.GRAY));
         wall1.addComponent(new SolidComponent());
         wall1.addComponent(new TerrainComponent());
-        tiles[wallPosition1.posX][wallPosition1.posY].removeAllEntities();
-        tiles[wallPosition1.posX][wallPosition1.posY].addEntity(wall1);
+        tiles[wallPosition1.posX.get()][wallPosition1.posY.get()].removeAllEntities();
+        tiles[wallPosition1.posX.get()][wallPosition1.posY.get()].addEntity(wall1);
 
         var wallPosition2 = new Position(currentArea, 2, 4);
         var wall2 = new Entity(wallPosition2);
@@ -69,8 +69,8 @@ public class Game extends Application {
         wall2.addComponent(new BackgroundComponent(Color.GRAY));
         wall2.addComponent(new SolidComponent());
         wall2.addComponent(new TerrainComponent());
-        tiles[wallPosition2.posX][wallPosition2.posY].removeAllEntities();
-        tiles[wallPosition2.posX][wallPosition2.posY].addEntity(wall2);
+        tiles[wallPosition2.posX.get()][wallPosition2.posY.get()].removeAllEntities();
+        tiles[wallPosition2.posX.get()][wallPosition2.posY.get()].addEntity(wall2);
 
         var wallPosition3 = new Position(currentArea, 1, 5);
         var wall3 = new Entity(wallPosition3);
@@ -78,11 +78,12 @@ public class Game extends Application {
         wall3.addComponent(new BackgroundComponent(Color.GRAY));
         wall3.addComponent(new SolidComponent());
         wall3.addComponent(new TerrainComponent());
-        tiles[wallPosition3.posX][wallPosition3.posY].removeAllEntities();
-        tiles[wallPosition3.posX][wallPosition3.posY].addEntity(wall3);
+        tiles[wallPosition3.posX.get()][wallPosition3.posY.get()].removeAllEntities();
+        tiles[wallPosition3.posX.get()][wallPosition3.posY.get()].addEntity(wall3);
 
 
         gamePane = new ViewPort(currentArea, 25, 25, 32);
+        gamePane.setFollowTarget(player);
         gamePane.updateAll();
         currentScene = new Scene(gamePane);
 
