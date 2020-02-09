@@ -66,7 +66,9 @@ public class RandomWalkAlgorithm implements Algorithm {
 
         for(int x=0; x<sizeX; x++) {
             for(int y=0; y<sizeY; y++) {
-                if(blueprint[x][y] == TerrainType.GROUND)
+                if(blueprint[x][y] == TerrainType.GROUND
+                    || blueprint[x][y] == TerrainType.ENTRANCE
+                    || blueprint[x][y] == TerrainType.EXIT)
                     addWallsAdjacentToGround(blueprint, x, y);
             }
         }

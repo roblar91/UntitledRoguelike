@@ -40,7 +40,6 @@ public class Game extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
 
-        //createTestArea();
         initArea();
         initView();
         initInput();
@@ -93,13 +92,12 @@ public class Game extends Application {
         player.addComponent(new AliveComponent());
         player.addComponent(new SolidComponent());
         player.addComponent(new MobileComponent());
-        currentArea.getTile(playerPosition.posX.get(), playerPosition.posY.get());
+        currentArea.getTile(playerPosition.posX.get(), playerPosition.posY.get()).addEntity(player);
     }
 
     private void initView() {
-        viewPort = new ViewPort(currentArea, 81, 51, 16);
+        viewPort = new ViewPort(currentArea, 51, 31, 24);
         viewPort.setFollowTarget(player);
-        viewPort.updateAll();
 
         mainPane = new AnchorPane(viewPort);
 
@@ -112,7 +110,7 @@ public class Game extends Application {
 
         actionBar = new Pane();
         actionBar.setPrefHeight(150);
-        actionBar.setBackground(new Background(new BackgroundFill(Color.DARKSLATEBLUE, null, null)));
+        actionBar.setBackground(new Background(new BackgroundFill(Color.DARKRED, null, null)));
 
         statusPane = new Pane();
         statusPane.setPrefWidth(300);
@@ -132,57 +130,5 @@ public class Game extends Application {
     private void initInput() {
         keyboardHandler = new KeyboardHandler(this);
         keyboardHandler.setInputDefault();
-    }
-
-    private void createTestArea() {
-        currentArea = new Area(10, 10);
-
-        var tiles = currentArea.getTiles();
-        for(int x=0; x < tiles.length; x++) {
-            for(int y=0; y < tiles[0].length; y++) {
-                var position = new Position(currentArea, x, y);
-                var entity = new Entity(position);
-                entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_250.png")));
-                entity.addComponent(new TerrainComponent());
-                entity.addComponent(new BackgroundComponent(Color.BROWN));
-                tiles[x][y].addEntity(entity);
-            }
-        }
-
-        var playerPosition = new Position(currentArea, 5, 5);
-        player = new Entity(playerPosition);
-        player.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
-        player.addComponent(new AliveComponent());
-        player.addComponent(new SolidComponent());
-        player.addComponent(new MobileComponent());
-        tiles[player.position.posX.get()][player.position.posY.get()].addEntity(player);
-
-        var wallImage = new Image("sprites/curses/curses_16x16_35.png");
-        var wallPosition1 = new Position(currentArea, 2, 3);
-        var wall1 = new Entity(wallPosition1);
-        wall1.addComponent(new SpriteComponent(wallImage));
-        wall1.addComponent(new BackgroundComponent(Color.LIGHTGRAY));
-        wall1.addComponent(new SolidComponent());
-        wall1.addComponent(new TerrainComponent());
-        tiles[wallPosition1.posX.get()][wallPosition1.posY.get()].removeAllEntities();
-        tiles[wallPosition1.posX.get()][wallPosition1.posY.get()].addEntity(wall1);
-
-        var wallPosition2 = new Position(currentArea, 2, 4);
-        var wall2 = new Entity(wallPosition2);
-        wall2.addComponent(new SpriteComponent(wallImage));
-        wall2.addComponent(new BackgroundComponent(Color.LIGHTGRAY));
-        wall2.addComponent(new SolidComponent());
-        wall2.addComponent(new TerrainComponent());
-        tiles[wallPosition2.posX.get()][wallPosition2.posY.get()].removeAllEntities();
-        tiles[wallPosition2.posX.get()][wallPosition2.posY.get()].addEntity(wall2);
-
-        var wallPosition3 = new Position(currentArea, 1, 5);
-        var wall3 = new Entity(wallPosition3);
-        wall3.addComponent(new SpriteComponent(wallImage));
-        wall3.addComponent(new BackgroundComponent(Color.LIGHTGRAY));
-        wall3.addComponent(new SolidComponent());
-        wall3.addComponent(new TerrainComponent());
-        tiles[wallPosition3.posX.get()][wallPosition3.posY.get()].removeAllEntities();
-        tiles[wallPosition3.posX.get()][wallPosition3.posY.get()].addEntity(wall3);
     }
 }
