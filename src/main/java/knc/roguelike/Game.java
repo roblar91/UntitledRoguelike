@@ -32,7 +32,7 @@ public class Game extends Application {
     public void start(Stage stage) throws Exception {
 
         // Create a test area
-        currentArea = new Area(50, 50);
+        currentArea = new Area(10, 10);
         var tiles = currentArea.getTiles();
         for(int x=0; x < tiles.length; x++) {
             for(int y=0; y < tiles[0].length; y++) {
@@ -52,6 +52,35 @@ public class Game extends Application {
         player.addComponent(new SolidComponent());
         player.addComponent(new MobileComponent());
         tiles[player.position.posX][player.position.posY].addEntity(player);
+
+        var wallImage = new Image("sprites/curses/curses_16x16_35.png");
+        var wallPosition1 = new Position(currentArea, 2, 3);
+        var wall1 = new Entity(wallPosition1);
+        wall1.addComponent(new SpriteComponent(wallImage));
+        wall1.addComponent(new BackgroundComponent(Color.GRAY));
+        wall1.addComponent(new SolidComponent());
+        wall1.addComponent(new TerrainComponent());
+        tiles[wallPosition1.posX][wallPosition1.posY].removeAllEntities();
+        tiles[wallPosition1.posX][wallPosition1.posY].addEntity(wall1);
+
+        var wallPosition2 = new Position(currentArea, 2, 4);
+        var wall2 = new Entity(wallPosition2);
+        wall2.addComponent(new SpriteComponent(wallImage));
+        wall2.addComponent(new BackgroundComponent(Color.GRAY));
+        wall2.addComponent(new SolidComponent());
+        wall2.addComponent(new TerrainComponent());
+        tiles[wallPosition2.posX][wallPosition2.posY].removeAllEntities();
+        tiles[wallPosition2.posX][wallPosition2.posY].addEntity(wall2);
+
+        var wallPosition3 = new Position(currentArea, 1, 5);
+        var wall3 = new Entity(wallPosition3);
+        wall3.addComponent(new SpriteComponent(wallImage));
+        wall3.addComponent(new BackgroundComponent(Color.GRAY));
+        wall3.addComponent(new SolidComponent());
+        wall3.addComponent(new TerrainComponent());
+        tiles[wallPosition3.posX][wallPosition3.posY].removeAllEntities();
+        tiles[wallPosition3.posX][wallPosition3.posY].addEntity(wall3);
+
 
         gamePane = new Renderer(currentArea, 25, 25, 32);
         gamePane.renderAll();

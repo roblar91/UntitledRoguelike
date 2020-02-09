@@ -35,5 +35,9 @@ public class Tile {
 
         return null;
     }
+
+    public void removeAllEntities() {
+        this.entities.clear();
+    }
 }
 

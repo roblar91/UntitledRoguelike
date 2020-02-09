@@ -46,7 +46,14 @@ public class Entity {
         var originTile = position.area.getTile(position.posX, position.posY);
         var targetTile = position.area.getTile(position.posX + dX, position.posY + dY);
 
-        // todo: collision check
+        if(targetTile == null) {
+            throw new IllegalActionException("Out of bounds");
+        }
+
+        if(targetTile.hasEntityWithComponent(Type.SOLID)) {
+            // todo: check for interactive objects or npcs
+            throw new IllegalActionException("Tile is solid");
+        }
 
         originTile.removeEntity(this);
         targetTile.addEntity(this);
