@@ -7,7 +7,8 @@
 package knc.roguelike.view;
 
 import javafx.scene.control.Control;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.component.BackgroundComponent;
 import knc.roguelike.model.entity.component.SpriteComponent;
@@ -17,7 +18,7 @@ import knc.roguelike.model.world.Tile;
 /**
  * A graphical representation of a {@link Tile} meant to be used by {@link ViewPort}.
  */
-class ViewTile extends Pane {
+class ViewTile extends StackPane {
     /**
      *
      * @param size The horizontal and vertical size of the tile in pixels
@@ -46,17 +47,14 @@ class ViewTile extends Pane {
             setBackground(bg.getBackground());
         }
 
-        // todo: render everything with a sprite, maybe?
-        Entity entity;
-
         if(tile.hasEntityWithComponent(Type.ALIVE)){
-            entity = tile.getEntityByComponent(Type.ALIVE);
+            addImageViewFromEntity(tile.getEntityByComponent(Type.ALIVE));
         } else if(tile.hasEntityWithComponent(Type.TERRAIN)){
-            entity = tile.getEntityByComponent(Type.TERRAIN);
-        } else {
-            return;
+            addImageViewFromEntity(tile.getEntityByComponent(Type.TERRAIN));
         }
+    }
 
+    private void addImageViewFromEntity(Entity entity) {
         var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
         var imageView = sprite.getImageView();
         imageView.setFitWidth(getPrefWidth());
