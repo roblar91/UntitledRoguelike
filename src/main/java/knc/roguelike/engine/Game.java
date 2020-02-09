@@ -8,7 +8,9 @@ package knc.roguelike.engine;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import knc.roguelike.action.Action;
@@ -30,6 +32,9 @@ public class Game extends Application {
     private Area currentArea;
     private Entity player;
     private KeyboardHandler keyboardHandler;
+    private Pane mainPane;
+    private Pane statusPane;
+    private Pane actionBar;
 
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -81,7 +86,29 @@ public class Game extends Application {
         viewPort = new ViewPort(currentArea, 81, 51, 16);
         viewPort.setFollowTarget(player);
         viewPort.updateAll();
-        currentScene = new Scene(viewPort);
+
+        mainPane = new AnchorPane(viewPort);
+
+        var con = new TextArea("Welcome to Untitled Roguelike!");
+        con.setEditable(false);
+        con.setDisable(true);
+        AnchorPane.setLeftAnchor(con, 0.0);
+        AnchorPane.setBottomAnchor(con, 0.0);
+        mainPane.getChildren().add(con);
+
+        actionBar = new Pane();
+        actionBar.setPrefHeight(150);
+        actionBar.setBackground(new Background(new BackgroundFill(Color.DARKSLATEBLUE, null, null)));
+
+        statusPane = new Pane();
+        statusPane.setPrefWidth(300);
+        statusPane.setBackground(new Background(new BackgroundFill(Color.DARKORANGE, null, null)));
+
+        var right = new VBox(mainPane, actionBar);
+        var root = new HBox(statusPane, right);
+
+        currentScene = new Scene(root);
+        currentScene.getStylesheets().add("css/console.css");
 
         stage.setScene(currentScene);
         stage.setTitle("Untitled Roguelike");
