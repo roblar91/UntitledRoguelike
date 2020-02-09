@@ -4,7 +4,7 @@
  *
  */
 
-package knc.roguelike.renderer;
+package knc.roguelike.view;
 
 import javafx.scene.control.Control;
 import javafx.scene.layout.Background;
@@ -14,10 +14,10 @@ import javafx.scene.paint.Color;
 import knc.roguelike.model.world.Area;
 
 /**
- * A Renderer is used to render part of an {@link knc.roguelike.model.world.Area}.
+ * A Renderer is used to render part of an {@link Area}.
  */
-public class Renderer extends Pane{
-    private final RenderTile[][] renderTiles;
+public class ViewPort extends Pane{
+    private final ViewTile[][] viewTiles;
     private final Area area;
     private final int horizontalTiles;
     private final int verticalTiles;
@@ -26,23 +26,23 @@ public class Renderer extends Pane{
 
     /**
      *
-     * @param area The {@link knc.roguelike.model.world.Area} that should be rendered
+     * @param area The {@link Area} that should be rendered
      * @param horizontalTiles Number of horizontal tiles that should be rendered
      * @param verticalTiles Number of vertical tiles that should be rendered
      * @param tileSize Size of each tile, in pixels
      */
-    public Renderer(Area area, int horizontalTiles, int verticalTiles, int tileSize) {
+    public ViewPort(Area area, int horizontalTiles, int verticalTiles, int tileSize) {
         this.setPrefSize(horizontalTiles * tileSize, verticalTiles * tileSize);
         this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
 
-        this.renderTiles = new RenderTile[horizontalTiles][verticalTiles];
+        this.viewTiles = new ViewTile[horizontalTiles][verticalTiles];
         for(int x=0; x<horizontalTiles; x++) {
             for(int y=0; y<verticalTiles; y++) {
-                var tile = new RenderTile(tileSize);
+                var tile = new ViewTile(tileSize);
                 tile.setTranslateX(x * tileSize);
                 tile.setTranslateY(y * tileSize);
-                renderTiles[x][y] = tile;
+                viewTiles[x][y] = tile;
                 getChildren().add(tile);
             }
         }
@@ -56,7 +56,7 @@ public class Renderer extends Pane{
     }
 
     /**
-     * Sets the top-left point of the camera to a tile in the associated {@link knc.roguelike.model.world.Area}.
+     * Sets the top-left point of the camera to a tile in the associated {@link Area}.
      * @param x The horizontal index
      * @param y The vertical index
      */
@@ -76,13 +76,13 @@ public class Renderer extends Pane{
     }
 
     /**
-     * Updates each tile with the current state of the associated {@link knc.roguelike.model.world.Area}.
+     * Updates each tile with the current state of the associated {@link Area}.
      */
-    public void renderAll() {
+    public void updateAll() {
         for(int x = 0; x< horizontalTiles; x++) {
             for(int y = 0; y< verticalTiles; y++) {
                 var tile = area.getTile(x+cameraX, y+cameraY);
-                renderTiles[x][y].setTile(tile);
+                viewTiles[x][y].setTile(tile);
             }
         }
     }

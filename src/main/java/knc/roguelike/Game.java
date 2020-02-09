@@ -18,13 +18,13 @@ import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.Position;
 import knc.roguelike.model.entity.component.*;
 import knc.roguelike.model.world.Area;
-import knc.roguelike.renderer.Renderer;
+import knc.roguelike.view.ViewPort;
 
 
 public class Game extends Application {
     private Stage stage;
     private Scene currentScene;
-    private Renderer gamePane;
+    private ViewPort gamePane;
     private Area currentArea;
     private Entity player;
     private KeyboardHandler keyboardHandler;
@@ -82,8 +82,8 @@ public class Game extends Application {
         tiles[wallPosition3.posX][wallPosition3.posY].addEntity(wall3);
 
 
-        gamePane = new Renderer(currentArea, 25, 25, 32);
-        gamePane.renderAll();
+        gamePane = new ViewPort(currentArea, 25, 25, 32);
+        gamePane.updateAll();
         currentScene = new Scene(gamePane);
 
         stage.setScene(currentScene);
@@ -106,7 +106,7 @@ public class Game extends Application {
                     }
                 }
                 if(update) {
-                    gamePane.renderAll();
+                    gamePane.updateAll();
                 }
                 keyboardHandler.setInputDefault();
             }
