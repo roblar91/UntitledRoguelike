@@ -122,43 +122,43 @@ public class RandomWalkAlgorithm implements Algorithm {
         }
     }
 
-    private Entity createEntity(Area area, int posX, int posY) {
+    private void createExit(Image image, Area area, int posX, int posY) {
         var position = new Position(area, posX, posY);
         var entity = new Entity(position);
-        area.getTile(posX, posY).addEntity(entity);
-
-        return entity;
-    }
-
-    private void createExit(Image image, Area area, int posX, int posY) {
-        var entity = createEntity(area, posX, posY);
         entity.addComponent(new SpriteComponent(image));
         entity.addComponent(new TerrainComponent());
         entity.addComponent(new ExitComponent());
         entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        area.getTile(posX, posY).addEntity(entity);
     }
 
     private void createEntrance(Image image, Area area, int posX, int posY) {
-        var entity = createEntity(area, posX, posY);
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
         entity.addComponent(new SpriteComponent(image));
         entity.addComponent(new TerrainComponent());
         entity.addComponent(new EntranceComponent());
         entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        area.getTile(posX, posY).addEntity(entity);
     }
 
     private void createWall(Image image, Area area, int posX, int posY) {
-        var entity = createEntity(area, posX, posY);
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
         entity.addComponent(new SpriteComponent(image, Color.DARKSLATEGRAY));
         entity.addComponent(new BackgroundComponent(Color.BLACK));
         entity.addComponent(new SolidComponent());
         entity.addComponent(new TerrainComponent());
+        area.getTile(posX, posY).addEntity(entity);
     }
 
     private void createGround(Image image, Area area, int posX, int posY) {
-        var entity = createEntity(area, posX, posY);
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
         entity.addComponent(new SpriteComponent(image));
         entity.addComponent(new TerrainComponent());
         entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        area.getTile(posX, posY).addEntity(entity);
     }
 
     private enum TerrainType {

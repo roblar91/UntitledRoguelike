@@ -6,7 +6,13 @@
 
 package knc.roguelike.model.world;
 
+import javafx.beans.value.ChangeListener;
+import javafx.scene.control.Control;
+import javafx.scene.layout.Pane;
+import knc.roguelike.engine.Game;
 import knc.roguelike.model.entity.Entity;
+import knc.roguelike.model.entity.component.BackgroundComponent;
+import knc.roguelike.model.entity.component.SpriteComponent;
 import knc.roguelike.model.entity.component.Type;
 
 import java.util.ArrayList;
@@ -14,8 +20,28 @@ import java.util.ArrayList;
 /**
  * A {@link Tile} is a unit of space in the game world.
  */
-public class Tile {
+public class Tile extends Pane {
+    private int column;
+    private int row;
     private ArrayList<Entity> entities = new ArrayList<>();
+
+    public Tile(int column, int row) {
+        this.column = column;
+        this.row = row;
+        this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+
+        ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
+            updatePositionAndSize();
+            System.out.println("Tile listener");
+        };
+
+        Game.viewTileSize.addListener(listener);
+        Game.viewRows.addListener(listener);
+        Game.viewColumns.addListener(listener);
+
+        updatePositionAndSize();
+    }
 
     /**
      * Assigns an {@link Entity} to this Tile
@@ -23,6 +49,17 @@ public class Tile {
      */
     public void addEntity(Entity entity) {
         entities.add(entity);
+
+        if(entity.hasComponent(Type.BACKGROUND)){
+            var background = (BackgroundComponent) entity.getComponent(Type.BACKGROUND);
+            setBackground(background.getBackground());
+        }
+
+        if(entity.hasComponent(Type.SPRITE)){
+            var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
+            sprite.setSize(Game.viewTileSize.get());
+            getChildren().add(sprite.getImageView());
+        }
     }
 
     /**
@@ -63,6 +100,20 @@ public class Tile {
      */
     public void removeAllEntities() {
         this.entities.clear();
+    }
+
+    private void updatePositionAndSize() {
+        setTranslateX(Game.viewTileSize.get() * column);
+        setTranslateY(Game.viewTileSize.get() * row);
+        setPrefSize(Game.viewTileSize.get(), Game.viewTileSize.get());
+
+        entities.forEach(entity -> {
+            if(entity.hasComponent(Type.SPRITE)){
+                var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
+                sprite.setSize(Game.viewTileSize.get());
+            }
+        });
+
     }
 }
 

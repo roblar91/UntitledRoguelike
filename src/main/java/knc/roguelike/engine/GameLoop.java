@@ -20,18 +20,14 @@ class GameLoop extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        var update = false;
         while(game.hasActionsQueued()) {
             try {
                 game.getNextAction().execute();
-                update = true;
             } catch(Exception e) {
                 System.out.println(e.getMessage());
             }
         }
-        if(update) {
-            game.getViewPort().updateAll();
-        }
+
         game.getKeyboardHandler().setInputDefault();
     }
 }

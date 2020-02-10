@@ -27,9 +27,16 @@ public class SpriteComponent implements Component {
     public SpriteComponent(Image image, Color color) {
         this(image);
         this.color = color;
+    }
 
-        this.imageView.fitHeightProperty().addListener((obs, oldV, newV) -> applyColorBlend());
-        this.applyColorBlend();
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setSize(double size) {
+        imageView.setFitHeight(size);
+        imageView.setFitWidth(size);
+        applyColorBlend();
     }
 
     private void applyColorBlend() {
@@ -50,14 +57,6 @@ public class SpriteComponent implements Component {
 
             this.imageView.setEffect(blend);
         }
-    }
-
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
     }
 
     @Override

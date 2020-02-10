@@ -7,11 +7,15 @@
 package knc.roguelike.engine;
 
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import knc.roguelike.model.entity.action.Action;
 import knc.roguelike.input.KeyboardHandler;
@@ -20,16 +24,18 @@ import knc.roguelike.model.entity.Position;
 import knc.roguelike.model.entity.component.*;
 import knc.roguelike.model.world.Area;
 import knc.roguelike.model.world.generation.Generator;
-import knc.roguelike.view.ViewPort;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Game extends Application {
+    public static IntegerProperty viewTileSize = new SimpleIntegerProperty(24);
+    public static IntegerProperty viewRows = new SimpleIntegerProperty(35);
+    public static IntegerProperty viewColumns = new SimpleIntegerProperty(61);
+
     private Queue<Action> actionQueue = new LinkedBlockingQueue<>();
     private Stage stage;
     private Scene currentScene;
-    private ViewPort viewPort;
     private Area currentArea;
     private Entity player;
     private KeyboardHandler keyboardHandler;
@@ -43,6 +49,8 @@ public class Game extends Application {
         initArea();
         initView();
         initInput();
+
+        currentArea.setCameraFollowTarget(player);
 
         new GameLoop(this).start();
     }
@@ -65,10 +73,6 @@ public class Game extends Application {
 
     public Scene getCurrentScene() {
         return currentScene;
-    }
-
-    public ViewPort getViewPort() {
-        return viewPort;
     }
 
     public Area getCurrentArea() {
@@ -96,10 +100,16 @@ public class Game extends Application {
     }
 
     private void initView() {
-        viewPort = new ViewPort(currentArea, 51, 31, 24);
-        viewPort.setFollowTarget(player);
-
-        mainPane = new AnchorPane(viewPort);
+        var view = new Pane(currentArea);
+        view.setPrefSize(viewTileSize.get() * viewColumns.get(), viewTileSize.get() * viewRows.get());
+        view.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        view.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        view.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        var clip = new Rectangle();
+        clip.widthProperty().bind(view.prefWidthProperty());
+        clip.heightProperty().bind(view.prefHeightProperty());
+        view.setClip(clip);
+        mainPane = new AnchorPane(view);
 
         var con = new TextArea("Welcome to Untitled Roguelike!");
         con.setEditable(false);
