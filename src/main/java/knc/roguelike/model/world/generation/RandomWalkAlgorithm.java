@@ -16,10 +16,10 @@ import knc.roguelike.model.world.Area;
 public class RandomWalkAlgorithm implements Algorithm {
     @Override
     public Area generateArea(int depth) {
-        int sizeX = Generator.rng.nextInt(50) + 50;
-        int sizeY = Generator.rng.nextInt(100) + 100;
+        int sizeX = Generator.rng.nextInt(50) + 25;
+        int sizeY = Generator.rng.nextInt(70) + 50;
         int openSpace = 0;
-        int openSpaceTarget = (sizeX * sizeY) * (Generator.rng.nextInt(35) + 15) / 100;
+        int openSpaceTarget = (sizeX * sizeY) * (Generator.rng.nextInt(30) + 10) / 100;
 
         // Initialize all tiles to walls
         var blueprint = new TerrainType[sizeX][sizeY];
