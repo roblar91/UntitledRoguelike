@@ -6,7 +6,6 @@
 
 package knc.roguelike.model.world;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Control;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -18,7 +17,8 @@ import knc.roguelike.model.entity.component.BackgroundComponent;
 import knc.roguelike.model.entity.component.SpriteComponent;
 import knc.roguelike.model.entity.component.Type;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A {@link Tile} is a unit of space in the game world. The tile will resize and reposition itself automatically if
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class Tile extends Pane {
     private int column;
     private int row;
-    private ArrayList<Entity> entities = new ArrayList<>();
+    private Set<Entity> entities = new HashSet<>();
     private Background defaultBackground = new Background(new BackgroundFill(Color.BLACK, null, null));
 
     /**

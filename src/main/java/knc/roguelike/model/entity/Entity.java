@@ -10,14 +10,15 @@ import knc.roguelike.exception.IllegalActionException;
 import knc.roguelike.model.entity.component.Component;
 import knc.roguelike.model.entity.component.Type;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * An {@link Entity} is any object in the world.
  * The characteristics of an Entity is specified by assigning various {@link Component} to it.
  */
 public class Entity {
-    private ArrayList<Component> components = new ArrayList<>();
+    private Set<Component> components = new HashSet<>();
     public Position position;
 
     /**
