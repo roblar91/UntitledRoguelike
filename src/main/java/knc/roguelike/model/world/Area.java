@@ -41,8 +41,8 @@ public class Area extends Pane {
             if(followTarget != null)
                 setCameraCenter(followTarget.position.posX.get(), followTarget.position.posY.get());
         };
-        Options.viewWidth.addListener(dimensionChangeListener);
-        Options.viewHeight.addListener(dimensionChangeListener);
+        Options.actualViewWidth.addListener(dimensionChangeListener);
+        Options.actualViewHeight.addListener(dimensionChangeListener);
     }
 
     /**
@@ -100,8 +100,8 @@ public class Area extends Pane {
      * @param y The vertical index
      */
     public void setCameraCenter(int x, int y) {
-        cameraX = x - Options.viewWidth.get() / Options.viewTileSize.get() / 2;
-        cameraY = y - Options.viewHeight.get() / Options.viewTileSize.get() / 2;
+        cameraX = x - Options.actualViewWidth.get() / Options.viewTileSize.get() / 2;
+        cameraY = y - Options.actualViewHeight.get() / Options.viewTileSize.get() / 2;
         reposition();
     }
 

@@ -10,15 +10,15 @@ import knc.roguelike.exception.IllegalActionException;
 import knc.roguelike.model.entity.component.Component;
 import knc.roguelike.model.entity.component.Type;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An {@link Entity} is any object in the world.
  * The characteristics of an Entity is specified by assigning various {@link Component} to it.
  */
 public class Entity {
-    private Set<Component> components = new HashSet<>();
+    private Map<Type, Component> components = new HashMap<>();
     public Position position;
 
     /**
@@ -33,7 +33,8 @@ public class Entity {
      * @param component The component to assign
      */
     public void addComponent(Component component) {
-        components.add(component);
+        components.put(component.getType(), component);
+        component.setOwner(this);
     }
 
     /**
@@ -42,7 +43,7 @@ public class Entity {
      * @return True if component is present
      */
     public boolean hasComponent(Type type) {
-        return getComponent(type) != null;
+        return components.containsKey(type);
     }
 
     /**
@@ -51,13 +52,7 @@ public class Entity {
      * @return The component
      */
     public Component getComponent(Type type) {
-        for(Component component : components) {
-            if(component.getType() == type) {
-                return component;
-            }
-        }
-
-        return null;
+        return components.get(type);
     }
 
     /**

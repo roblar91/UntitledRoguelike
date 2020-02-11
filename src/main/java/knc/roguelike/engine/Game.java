@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -84,10 +85,15 @@ public class Game extends Application {
         var entrance = currentArea.getEntrance();
         var playerPosition = new Position(currentArea, entrance.position.posX.get(), entrance.position.posY.get());
         player = new Entity(playerPosition);
+
         player.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
         player.addComponent(new AliveComponent());
         player.addComponent(new SolidComponent());
         player.addComponent(new MobileComponent());
+        player.addComponent(new PlayerComponent());
+        player.addComponent(new HealthComponent());
+        player.addComponent(new AttributesComponent());
+
         currentArea.getTile(playerPosition.posX.get(), playerPosition.posY.get()).addEntity(player);
     }
 
@@ -100,8 +106,8 @@ public class Game extends Application {
         currentScene = new Scene(root);
         currentScene.getStylesheets().add("css/console.css");
 
-        Options.viewHeight.bind(controller.mainPane.heightProperty());
-        Options.viewWidth.bind(controller.mainPane.widthProperty());
+        Options.actualViewHeight.bind(controller.mainPane.heightProperty());
+        Options.actualViewWidth.bind(controller.mainPane.widthProperty());
 
         stage.setScene(currentScene);
         stage.setTitle("Untitled Roguelike");

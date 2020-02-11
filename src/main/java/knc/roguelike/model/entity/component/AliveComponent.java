@@ -6,7 +6,7 @@
 
 package knc.roguelike.model.entity.component;
 
-public class AliveComponent implements Component {
+public class AliveComponent extends Component {
     @Override
     public Type getType() {
         return Type.ALIVE;

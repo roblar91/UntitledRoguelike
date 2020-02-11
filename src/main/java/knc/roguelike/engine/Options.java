@@ -11,8 +11,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public final class Options {
     public static IntegerProperty viewTileSize = new SimpleIntegerProperty(24);
-    public static IntegerProperty viewHeight = new SimpleIntegerProperty(400);
-    public static IntegerProperty viewWidth = new SimpleIntegerProperty(600);
+    public static IntegerProperty actualViewHeight = new SimpleIntegerProperty();
+    public static IntegerProperty actualViewWidth = new SimpleIntegerProperty();
+
+//    public static IntegerProperty targetTotalHeight = new SimpleIntegerProperty(800);
+//    public static IntegerProperty targetTotalWidth = new SimpleIntegerProperty(1200);
 
     private Options() {}
 }

@@ -6,9 +6,9 @@
 
 package knc.roguelike.model.entity.component;
 
-public class MobileComponent extends Component {
+public class HostileComponent extends Component {
     @Override
     public Type getType() {
-        return Type.MOBILE;
+        return Type.HOSTILE;
     }
 }

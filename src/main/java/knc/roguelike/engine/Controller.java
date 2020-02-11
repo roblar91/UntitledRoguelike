@@ -15,6 +15,8 @@ import knc.roguelike.model.world.Area;
 
 public class Controller {
     @FXML
+    public Pane rootPane;
+    @FXML
     public Pane mainPane;
     @FXML
     public Pane statusPane;

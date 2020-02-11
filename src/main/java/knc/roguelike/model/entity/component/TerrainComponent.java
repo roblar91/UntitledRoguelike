@@ -6,7 +6,7 @@
 
 package knc.roguelike.model.entity.component;
 
-public class TerrainComponent implements Component {
+public class TerrainComponent extends Component {
     @Override
     public Type getType() {
         return Type.TERRAIN;

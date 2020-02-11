@@ -6,7 +6,7 @@
 
 package knc.roguelike.model.entity.component;
 
-public class ExitComponent implements Component {
+public class ExitComponent extends Component {
     @Override
     public Type getType() {
         return Type.EXIT;

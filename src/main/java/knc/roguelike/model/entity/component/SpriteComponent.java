@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class SpriteComponent implements Component {
+public class SpriteComponent extends Component {
     private ImageView imageView;
     private Image image;
     private Color color;

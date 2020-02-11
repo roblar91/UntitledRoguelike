@@ -6,7 +6,7 @@
 
 package knc.roguelike.model.entity.component;
 
-public class SolidComponent implements Component {
+public class SolidComponent extends Component {
     @Override
     public Type getType() {
         return Type.SOLID;
