@@ -6,11 +6,9 @@
 
 package knc.roguelike.model.world.generation;
 
-import knc.roguelike.model.world.Area;
-
 public class BinarySearchTreeAlgorithm implements Algorithm {
     @Override
-    public Area generateArea(int depth) {
+    public TerrainType[][] generateBlueprint(int depth) {
         return null;
     }
 }

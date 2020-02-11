@@ -6,20 +6,13 @@
 
 package knc.roguelike.model.world.generation;
 
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import knc.roguelike.model.entity.Entity;
-import knc.roguelike.model.entity.Position;
-import knc.roguelike.model.entity.component.*;
-import knc.roguelike.model.world.Area;
-
 public class RandomWalkAlgorithm implements Algorithm {
     @Override
-    public Area generateArea(int depth) {
-        int sizeX = Generator.rng.nextInt(50) + 25;
-        int sizeY = Generator.rng.nextInt(70) + 50;
+    public TerrainType[][] generateBlueprint(int depth) {
+        int sizeX = Generator.rng.nextInt(25) + 50;
+        int sizeY = Generator.rng.nextInt(50) + 70;
         int openSpace = 0;
-        int openSpaceTarget = (sizeX * sizeY) * (Generator.rng.nextInt(30) + 10) / 100;
+        int openSpaceTarget = (sizeX * sizeY) * (Generator.rng.nextInt(20) + 20) / 100;
 
         // Initialize all tiles to walls
         var blueprint = new TerrainType[sizeX][sizeY];
@@ -73,35 +66,7 @@ public class RandomWalkAlgorithm implements Algorithm {
             }
         }
 
-        // Use the blueprint to create tiles
-        var wallImage = new Image("sprites/curses/curses_16x16_35.png");
-        var groundImage = new Image("sprites/curses/curses_16x16_250.png");
-        var entranceImage = new Image("sprites/curses/curses_16x16_62.png");
-        var exitImage = new Image("sprites/curses/curses_16x16_60.png");
-        var area = new Area(sizeX, sizeY);
-
-        for(int x=0; x<sizeX; x++) {
-            for(int y=0; y<sizeY; y++) {
-                switch(blueprint[x][y]){
-                    case WALL:
-                        createWall(wallImage, area, x, y);
-                        break;
-                    case GROUND:
-                        createGround(groundImage, area, x, y);
-                        break;
-                    case ENTRANCE:
-                        createEntrance(entranceImage, area, x, y);
-                        break;
-                    case EXIT:
-                        createExit(exitImage, area, x, y);
-                        break;
-                }
-            }
-        }
-
-        // Add entrance
-
-        return area;
+        return blueprint;
     }
 
     private void addWallsAdjacentToGround(TerrainType[][] blueprint, int x, int y) {
@@ -122,50 +87,4 @@ public class RandomWalkAlgorithm implements Algorithm {
         }
     }
 
-    private void createExit(Image image, Area area, int posX, int posY) {
-        var position = new Position(area, posX, posY);
-        var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(image));
-        entity.addComponent(new TerrainComponent());
-        entity.addComponent(new ExitComponent());
-        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
-        area.getTile(posX, posY).addEntity(entity);
-    }
-
-    private void createEntrance(Image image, Area area, int posX, int posY) {
-        var position = new Position(area, posX, posY);
-        var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(image));
-        entity.addComponent(new TerrainComponent());
-        entity.addComponent(new EntranceComponent());
-        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
-        area.getTile(posX, posY).addEntity(entity);
-    }
-
-    private void createWall(Image image, Area area, int posX, int posY) {
-        var position = new Position(area, posX, posY);
-        var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(image, Color.DARKSLATEGRAY));
-        entity.addComponent(new BackgroundComponent(Color.BLACK));
-        entity.addComponent(new SolidComponent());
-        entity.addComponent(new TerrainComponent());
-        area.getTile(posX, posY).addEntity(entity);
-    }
-
-    private void createGround(Image image, Area area, int posX, int posY) {
-        var position = new Position(area, posX, posY);
-        var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(image));
-        entity.addComponent(new TerrainComponent());
-        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
-        area.getTile(posX, posY).addEntity(entity);
-    }
-
-    private enum TerrainType {
-        NONE,
-        WALL,
-        GROUND,
-        ENTRANCE,
-        EXIT;
-    }
 }

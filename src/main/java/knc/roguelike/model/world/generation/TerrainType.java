@@ -6,6 +6,10 @@
 
 package knc.roguelike.model.world.generation;
 
-interface Algorithm {
-    TerrainType[][] generateBlueprint(int depth);
+public enum TerrainType {
+    NONE,
+    WALL,
+    GROUND,
+    ENTRANCE,
+    EXIT;
 }

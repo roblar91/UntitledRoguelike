@@ -6,6 +6,11 @@
 
 package knc.roguelike.model.world.generation;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import knc.roguelike.model.entity.Entity;
+import knc.roguelike.model.entity.Position;
+import knc.roguelike.model.entity.component.*;
 import knc.roguelike.model.world.Area;
 
 import java.util.Random;
@@ -16,8 +21,9 @@ public final class Generator {
     private Generator(){}
 
     public static Area getArea(int depth) {
-        Algorithm algorithm = getRandomAlgorithm();
-        return algorithm.generateArea(depth);
+        var algorithm = getRandomAlgorithm();
+        var blueprint = algorithm.generateBlueprint(depth);
+        return generateArea(blueprint);
     }
 
     private static Algorithm getRandomAlgorithm() {
@@ -27,11 +33,76 @@ public final class Generator {
             case 0:
                 return new RandomWalkAlgorithm();
             case 1:
-                return new CellularAutomataAlgorithm();
-            case 2:
                 return new BinarySearchTreeAlgorithm();
+            default:
+                return new RandomWalkAlgorithm();
+        }
+    }
+
+    private static Area generateArea(TerrainType[][] blueprint) {
+        var sizeX = blueprint.length;
+        var sizeY = blueprint[0].length;
+        var area = new Area(sizeX, sizeY);
+
+        for(int x=0; x<sizeX; x++) {
+            for(int y=0; y<sizeY; y++) {
+                switch(blueprint[x][y]){
+                    case WALL:
+                        createWall(area, x, y);
+                        break;
+                    case GROUND:
+                        createGround(area, x, y);
+                        break;
+                    case ENTRANCE:
+                        createEntrance(area, x, y);
+                        break;
+                    case EXIT:
+                        createExit(area, x, y);
+                        break;
+                }
+            }
         }
 
-        return null;
+        return area;
+    }
+
+
+    private static void createExit(Area area, int posX, int posY) {
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
+        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_60.png")));
+        entity.addComponent(new TerrainComponent());
+        entity.addComponent(new ExitComponent());
+        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        area.getTile(posX, posY).addEntity(entity);
+    }
+
+    private static void createEntrance(Area area, int posX, int posY) {
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
+        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_62.png")));
+        entity.addComponent(new TerrainComponent());
+        entity.addComponent(new EntranceComponent());
+        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        area.getTile(posX, posY).addEntity(entity);
+    }
+
+    private static void createWall(Area area, int posX, int posY) {
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
+        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_35.png"), Color.DARKSLATEGRAY));
+        entity.addComponent(new BackgroundComponent(Color.BLACK));
+        entity.addComponent(new SolidComponent());
+        entity.addComponent(new TerrainComponent());
+        area.getTile(posX, posY).addEntity(entity);
+    }
+
+    private static void createGround(Area area, int posX, int posY) {
+        var position = new Position(area, posX, posY);
+        var entity = new Entity(position);
+        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_250.png")));
+        entity.addComponent(new TerrainComponent());
+        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        area.getTile(posX, posY).addEntity(entity);
     }
 }
