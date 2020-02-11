@@ -8,7 +8,7 @@ package knc.roguelike.model.world;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.Pane;
-import knc.roguelike.engine.Game;
+import knc.roguelike.engine.Options;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.component.Type;
 
@@ -41,8 +41,8 @@ public class Area extends Pane {
             if(followTarget != null)
                 setCameraCenter(followTarget.position.posX.get(), followTarget.position.posY.get());
         };
-        Game.viewWidth.addListener(dimensionChangeListener);
-        Game.viewHeight.addListener(dimensionChangeListener);
+        Options.viewWidth.addListener(dimensionChangeListener);
+        Options.viewHeight.addListener(dimensionChangeListener);
     }
 
     /**
@@ -100,8 +100,8 @@ public class Area extends Pane {
      * @param y The vertical index
      */
     public void setCameraCenter(int x, int y) {
-        cameraX = x - Game.viewWidth.get() / Game.viewTileSize.get() / 2;
-        cameraY = y - Game.viewHeight.get() / Game.viewTileSize.get() / 2;
+        cameraX = x - Options.viewWidth.get() / Options.viewTileSize.get() / 2;
+        cameraY = y - Options.viewHeight.get() / Options.viewTileSize.get() / 2;
         reposition();
     }
 
@@ -154,7 +154,7 @@ public class Area extends Pane {
     }
 
     private void reposition() {
-        setTranslateX(-(cameraX * Game.viewTileSize.get()));
-        setTranslateY(-(cameraY * Game.viewTileSize.get()));
+        setTranslateX(-(cameraX * Options.viewTileSize.get()));
+        setTranslateY(-(cameraY * Options.viewTileSize.get()));
     }
 }

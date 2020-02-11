@@ -8,6 +8,10 @@ package knc.roguelike.model.entity.component;
 
 public enum Type {
     PLAYER,
+    HOSTILE,
+    NEUTRAL,
+    FRIENDLY,
+    ALLY,
     ALIVE,
     TERRAIN,
     ITEM,
@@ -16,5 +20,7 @@ public enum Type {
     BACKGROUND,
     MOBILE,
     ENTRANCE,
-    EXIT;
+    EXIT,
+    HEALTH,
+    ATTRIBUTES;
 }

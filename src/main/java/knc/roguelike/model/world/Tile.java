@@ -11,7 +11,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import knc.roguelike.engine.Game;
+import knc.roguelike.engine.Options;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.component.BackgroundComponent;
 import knc.roguelike.model.entity.component.SpriteComponent;
@@ -22,7 +22,7 @@ import java.util.Set;
 
 /**
  * A {@link Tile} is a unit of space in the game world. The tile will resize and reposition itself automatically if
- * viewTileSize in {@link Game} changes.
+ * viewTileSize in {@link Options} changes.
  */
 public class Tile extends Pane {
     private int column;
@@ -40,7 +40,7 @@ public class Tile extends Pane {
         this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
 
-        Game.viewTileSize.addListener((observable, oldValue, newValue) -> updatePositionAndSize());
+        Options.viewTileSize.addListener((observable, oldValue, newValue) -> updatePositionAndSize());
         updatePositionAndSize();
     }
 
@@ -95,14 +95,14 @@ public class Tile extends Pane {
     }
 
     private void updatePositionAndSize() {
-        setTranslateX(Game.viewTileSize.get() * column);
-        setTranslateY(Game.viewTileSize.get() * row);
-        setPrefSize(Game.viewTileSize.get(), Game.viewTileSize.get());
+        setTranslateX(Options.viewTileSize.get() * column);
+        setTranslateY(Options.viewTileSize.get() * row);
+        setPrefSize(Options.viewTileSize.get(), Options.viewTileSize.get());
 
         entities.forEach(entity -> {
             if(entity.hasComponent(Type.SPRITE)){
                 var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-                sprite.setSize(Game.viewTileSize.get());
+                sprite.setSize(Options.viewTileSize.get());
             }
         });
     }
@@ -121,13 +121,13 @@ public class Tile extends Pane {
         if(hasEntityWithComponent(Type.ALIVE)) {
             var entity = getEntityByComponent(Type.ALIVE);
             var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-            sprite.setSize(Game.viewTileSize.get());
+            sprite.setSize(Options.viewTileSize.get());
             getChildren().add(sprite.getImageView());
         }
         else if(hasEntityWithComponent(Type.TERRAIN)) {
             var entity = getEntityByComponent(Type.TERRAIN);
             var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-            sprite.setSize(Game.viewTileSize.get());
+            sprite.setSize(Options.viewTileSize.get());
             getChildren().add(sprite.getImageView());
         }
     }
