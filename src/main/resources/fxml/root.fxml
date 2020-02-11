@@ -4,15 +4,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<HBox fx:controller="knc.roguelike.engine.Controller"
-        fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="knc.roguelike.engine.Controller">
    <children>
-      <VBox fx:id="statusPane" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" style="-fx-background-color: orange"/>
+      <VBox fx:id="statusPane" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" style="-fx-background-color: orange" />
       <VBox fx:id="right" HBox.hgrow="ALWAYS">
          <children>
-            <AnchorPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" style="-fx-background-color: black"/>
-            <HBox fx:id="actionPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" style="-fx-background-color: darkred"/>
+            <AnchorPane fx:id="mainPane" style="-fx-background-color: black" VBox.vgrow="ALWAYS" />
+            <HBox fx:id="actionPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" style="-fx-background-color: darkred" />
          </children>
       </VBox>
    </children>

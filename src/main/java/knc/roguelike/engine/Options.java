@@ -14,8 +14,8 @@ public final class Options {
     public static IntegerProperty actualViewHeight = new SimpleIntegerProperty();
     public static IntegerProperty actualViewWidth = new SimpleIntegerProperty();
 
-//    public static IntegerProperty targetTotalHeight = new SimpleIntegerProperty(800);
-//    public static IntegerProperty targetTotalWidth = new SimpleIntegerProperty(1200);
+    public static IntegerProperty targetTotalHeight = new SimpleIntegerProperty(800);
+    public static IntegerProperty targetTotalWidth = new SimpleIntegerProperty(1200);
 
     private Options() {}
 }

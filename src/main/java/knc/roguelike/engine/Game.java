@@ -109,6 +109,9 @@ public class Game extends Application {
         Options.actualViewHeight.bind(controller.mainPane.heightProperty());
         Options.actualViewWidth.bind(controller.mainPane.widthProperty());
 
+        controller.rootPane.prefWidthProperty().bind(Options.targetTotalWidth);
+        controller.rootPane.prefHeightProperty().bind(Options.targetTotalHeight);
+
         stage.setScene(currentScene);
         stage.setTitle("Untitled Roguelike");
         stage.show();
