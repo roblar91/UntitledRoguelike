@@ -8,7 +8,10 @@ package knc.roguelike.model.world;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Control;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import knc.roguelike.engine.Game;
 import knc.roguelike.model.entity.Entity;
 import knc.roguelike.model.entity.component.BackgroundComponent;
@@ -18,13 +21,19 @@ import knc.roguelike.model.entity.component.Type;
 import java.util.ArrayList;
 
 /**
- * A {@link Tile} is a unit of space in the game world.
+ * A {@link Tile} is a unit of space in the game world. The tile will resize and reposition itself automatically if
+ * viewTileSize in {@link Game} changes.
  */
 public class Tile extends Pane {
     private int column;
     private int row;
     private ArrayList<Entity> entities = new ArrayList<>();
+    private Background defaultBackground = new Background(new BackgroundFill(Color.BLACK, null, null));
 
+    /**
+     * @param column The column index of this tile
+     * @param row The row index of this tile
+     */
     public Tile(int column, int row) {
         this.column = column;
         this.row = row;
@@ -41,17 +50,7 @@ public class Tile extends Pane {
      */
     public void addEntity(Entity entity) {
         entities.add(entity);
-
-        if(entity.hasComponent(Type.BACKGROUND)){
-            var background = (BackgroundComponent) entity.getComponent(Type.BACKGROUND);
-            setBackground(background.getBackground());
-        }
-
-        if(entity.hasComponent(Type.SPRITE)){
-            var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-            sprite.setSize(Game.viewTileSize.get());
-            getChildren().add(sprite.getImageView());
-        }
+        updateSprite();
     }
 
     /**
@@ -60,6 +59,7 @@ public class Tile extends Pane {
      */
     public void removeEntity(Entity entity) {
         entities.remove(entity);
+        updateSprite();
     }
 
     /**
@@ -105,7 +105,31 @@ public class Tile extends Pane {
                 sprite.setSize(Game.viewTileSize.get());
             }
         });
+    }
 
+    private void updateSprite() {
+        getChildren().clear();
+
+        if(hasEntityWithComponent(Type.BACKGROUND)) {
+            var entity = getEntityByComponent(Type.BACKGROUND);
+            var background = (BackgroundComponent) entity.getComponent(Type.BACKGROUND);
+            setBackground(background.getBackground());
+        } else {
+            setBackground(defaultBackground);
+        }
+
+        if(hasEntityWithComponent(Type.ALIVE)) {
+            var entity = getEntityByComponent(Type.ALIVE);
+            var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
+            sprite.setSize(Game.viewTileSize.get());
+            getChildren().add(sprite.getImageView());
+        }
+        else if(hasEntityWithComponent(Type.TERRAIN)) {
+            var entity = getEntityByComponent(Type.TERRAIN);
+            var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
+            sprite.setSize(Game.viewTileSize.get());
+            getChildren().add(sprite.getImageView());
+        }
     }
 }
 
