@@ -31,15 +31,7 @@ public class Tile extends Pane {
         this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
 
-        ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
-            updatePositionAndSize();
-            System.out.println("Tile listener");
-        };
-
-        Game.viewTileSize.addListener(listener);
-        Game.viewRows.addListener(listener);
-        Game.viewColumns.addListener(listener);
-
+        Game.viewTileSize.addListener((observable, oldValue, newValue) -> updatePositionAndSize());
         updatePositionAndSize();
     }
 

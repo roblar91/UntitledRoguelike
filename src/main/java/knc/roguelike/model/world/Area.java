@@ -36,6 +36,13 @@ public class Area extends Pane {
                 getChildren().add(tile);
             }
         }
+
+        ChangeListener<Number> dimensionChangeListener = (obs, oldV, newV) -> {
+            if(followTarget != null)
+                setCameraCenter(followTarget.position.posX.get(), followTarget.position.posY.get());
+        };
+        Game.viewWidth.addListener(dimensionChangeListener);
+        Game.viewHeight.addListener(dimensionChangeListener);
     }
 
     /**
@@ -93,8 +100,8 @@ public class Area extends Pane {
      * @param y The vertical index
      */
     public void setCameraCenter(int x, int y) {
-        cameraX = x - Game.viewColumns.get() / 2;
-        cameraY = y - Game.viewRows.get() / 2;
+        cameraX = x - Game.viewWidth.get() / Game.viewTileSize.get() / 2;
+        cameraY = y - Game.viewHeight.get() / Game.viewTileSize.get() / 2;
         reposition();
     }
 

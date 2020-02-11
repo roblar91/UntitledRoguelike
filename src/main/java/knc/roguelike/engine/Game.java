@@ -29,8 +29,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Game extends Application {
     public static IntegerProperty viewTileSize = new SimpleIntegerProperty(24);
-    public static IntegerProperty viewRows = new SimpleIntegerProperty(35);
-    public static IntegerProperty viewColumns = new SimpleIntegerProperty(61);
+    public static IntegerProperty viewHeight = new SimpleIntegerProperty(400);
+    public static IntegerProperty viewWidth = new SimpleIntegerProperty(600);
 
     private Queue<Action> actionQueue = new LinkedBlockingQueue<>();
     private Stage stage;
@@ -105,6 +105,9 @@ public class Game extends Application {
 
         currentScene = new Scene(root);
         currentScene.getStylesheets().add("css/console.css");
+
+        viewHeight.bind(controller.mainPane.heightProperty());
+        viewWidth.bind(controller.mainPane.widthProperty());
 
         stage.setScene(currentScene);
         stage.setTitle("Untitled Roguelike");
