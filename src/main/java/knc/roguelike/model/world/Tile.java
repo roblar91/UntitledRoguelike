@@ -6,29 +6,19 @@
 
 package knc.roguelike.model.world;
 
-import javafx.scene.control.Control;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import knc.roguelike.engine.Options;
 import knc.roguelike.model.entity.Entity;
-import knc.roguelike.model.entity.component.BackgroundComponent;
-import knc.roguelike.model.entity.component.SpriteComponent;
 import knc.roguelike.model.entity.component.Type;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A {@link Tile} is a unit of space in the game world. The tile will resize and reposition itself automatically if
- * viewTileSize in {@link Options} changes.
+ * A {@link Tile} is a unit of space in the game world.
  */
-public class Tile extends Pane {
+public class Tile {
     private int column;
     private int row;
     private Set<Entity> entities = new HashSet<>();
-    private Background defaultBackground = new Background(new BackgroundFill(Color.BLACK, null, null));
 
     /**
      * @param column The column index of this tile
@@ -37,11 +27,6 @@ public class Tile extends Pane {
     public Tile(int column, int row) {
         this.column = column;
         this.row = row;
-        this.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
-        this.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
-
-        Options.viewTileSize.addListener((observable, oldValue, newValue) -> updatePositionAndSize());
-        updatePositionAndSize();
     }
 
     /**
@@ -50,7 +35,7 @@ public class Tile extends Pane {
      */
     public void addEntity(Entity entity) {
         entities.add(entity);
-        updateSprite();
+        updateVisibility();
     }
 
     /**
@@ -59,7 +44,7 @@ public class Tile extends Pane {
      */
     public void removeEntity(Entity entity) {
         entities.remove(entity);
-        updateSprite();
+        updateVisibility();
     }
 
     /**
@@ -94,41 +79,16 @@ public class Tile extends Pane {
         this.entities.clear();
     }
 
-    private void updatePositionAndSize() {
-        setTranslateX(Options.viewTileSize.get() * column);
-        setTranslateY(Options.viewTileSize.get() * row);
-        setPrefSize(Options.viewTileSize.get(), Options.viewTileSize.get());
-
-        entities.forEach(entity -> {
-            if(entity.hasComponent(Type.SPRITE)){
-                var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-                sprite.setSize(Options.viewTileSize.get());
-            }
-        });
-    }
-
-    private void updateSprite() {
-        getChildren().clear();
-
-        if(hasEntityWithComponent(Type.BACKGROUND)) {
-            var entity = getEntityByComponent(Type.BACKGROUND);
-            var background = (BackgroundComponent) entity.getComponent(Type.BACKGROUND);
-            setBackground(background.getBackground());
-        } else {
-            setBackground(defaultBackground);
-        }
+    private void updateVisibility() {
+        entities.forEach(entity -> entity.setOnTop(false));
 
         if(hasEntityWithComponent(Type.ALIVE)) {
             var entity = getEntityByComponent(Type.ALIVE);
-            var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-            sprite.setSize(Options.viewTileSize.get());
-            getChildren().add(sprite.getImageView());
+            entity.setOnTop(true);
         }
         else if(hasEntityWithComponent(Type.TERRAIN)) {
             var entity = getEntityByComponent(Type.TERRAIN);
-            var sprite = (SpriteComponent) entity.getComponent(Type.SPRITE);
-            sprite.setSize(Options.viewTileSize.get());
-            getChildren().add(sprite.getImageView());
+            entity.setOnTop(true);
         }
     }
 }

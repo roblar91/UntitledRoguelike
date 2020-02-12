@@ -33,7 +33,6 @@ public class Area extends Pane {
             for(int y=0; y<tiles[0].length; y++) {
                 var tile = new Tile(x, y);
                 tiles[x][y] = tile;
-                getChildren().add(tile);
             }
         }
 
@@ -100,8 +99,8 @@ public class Area extends Pane {
      * @param y The vertical index
      */
     public void setCameraCenter(int x, int y) {
-        cameraX = x - Options.actualViewWidth.get() / Options.viewTileSize.get() / 2;
-        cameraY = y - Options.actualViewHeight.get() / Options.viewTileSize.get() / 2;
+        cameraX = x - Options.actualViewWidth.get() / Options.tileSize.get() / 2;
+        cameraY = y - Options.actualViewHeight.get() / Options.tileSize.get() / 2;
         reposition();
     }
 
@@ -154,7 +153,7 @@ public class Area extends Pane {
     }
 
     private void reposition() {
-        setTranslateX(-(cameraX * Options.viewTileSize.get()));
-        setTranslateY(-(cameraY * Options.viewTileSize.get()));
+        setTranslateX(-(cameraX * Options.tileSize.get()));
+        setTranslateY(-(cameraY * Options.tileSize.get()));
     }
 }

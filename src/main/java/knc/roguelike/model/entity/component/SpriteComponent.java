@@ -13,6 +13,7 @@ import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import knc.roguelike.engine.Options;
 import knc.roguelike.model.entity.Entity;
 
 public class SpriteComponent extends Component {
@@ -21,23 +22,26 @@ public class SpriteComponent extends Component {
     private Color color;
 
     public SpriteComponent(Entity owner, Image image) {
-        super(owner);
-        this.image = image;
-        this.imageView = new ImageView(image);
+        this(owner, image, null);
     }
 
     public SpriteComponent(Entity owner, Image image, Color color) {
-        this(owner, image);
+        super(owner);
+        this.image = image;
+        this.imageView = new ImageView(image);
         this.color = color;
+
+        Options.tileSize.addListener((obs, oldV, newV) -> resize());
+        resize();
     }
 
     public ImageView getImageView() {
         return imageView;
     }
 
-    public void setSize(double size) {
-        imageView.setFitHeight(size);
-        imageView.setFitWidth(size);
+    private void resize() {
+        imageView.setFitHeight(Options.tileSize.get());
+        imageView.setFitWidth(Options.tileSize.get());
         applyColorBlend();
     }
 

@@ -6,8 +6,13 @@
 
 package knc.roguelike.model.entity;
 
+import javafx.scene.control.Control;
+import javafx.scene.layout.Pane;
+import knc.roguelike.engine.Options;
 import knc.roguelike.exception.IllegalActionException;
+import knc.roguelike.model.entity.component.BackgroundComponent;
 import knc.roguelike.model.entity.component.Component;
+import knc.roguelike.model.entity.component.SpriteComponent;
 import knc.roguelike.model.entity.component.Type;
 
 import java.util.HashMap;
@@ -17,7 +22,7 @@ import java.util.Map;
  * An {@link Entity} is any object in the world.
  * The characteristics of an Entity is specified by assigning various {@link Component} to it.
  */
-public class Entity {
+public class Entity extends Pane {
     private Map<Type, Component> components = new HashMap<>();
     public Position position;
 
@@ -26,6 +31,11 @@ public class Entity {
      */
     public Entity(Position position) {
         this.position = position;
+
+        setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        reposition();
+        position.area.getChildren().add(this);
     }
 
     /**
@@ -34,6 +44,17 @@ public class Entity {
      */
     public void addComponent(Component component) {
         components.put(component.getType(), component);
+
+        switch(component.getType()){
+            case SPRITE:
+                var sprite = (SpriteComponent) component;
+                getChildren().add(sprite.getImageView());
+                break;
+            case BACKGROUND:
+                var background = (BackgroundComponent) component;
+                setBackground(background.getBackground());
+                break;
+        }
     }
 
     /**
@@ -52,6 +73,18 @@ public class Entity {
      */
     public Component getComponent(Type type) {
         return components.get(type);
+    }
+
+    /**
+     * Sets whether this entity should be displayed at the top of a {@link knc.roguelike.model.world.Tile}. If false,
+     * all renderable elements except for background color will be hidden.
+     * @param isOnTop Is entity on top
+     */
+    public void setOnTop(boolean isOnTop) {
+        if(hasComponent(Type.SPRITE)) {
+            var sprite = (SpriteComponent) getComponent(Type.SPRITE);
+            sprite.getImageView().setVisible(isOnTop);
+        }
     }
 
     /**
@@ -80,5 +113,12 @@ public class Entity {
         originTile.removeEntity(this);
         targetTile.addEntity(this);
         position.move(dX, dY);
+        reposition();
     }
+
+    private void reposition() {
+        setTranslateX(position.posX.get() * Options.tileSize.get());
+        setTranslateY(position.posY.get() * Options.tileSize.get());
+    }
+
 }

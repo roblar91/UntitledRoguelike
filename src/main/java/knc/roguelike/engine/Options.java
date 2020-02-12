@@ -10,7 +10,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public final class Options {
-    public static IntegerProperty viewTileSize = new SimpleIntegerProperty(24);
+    public static IntegerProperty tileSize = new SimpleIntegerProperty(24);
     public static IntegerProperty actualViewHeight = new SimpleIntegerProperty();
     public static IntegerProperty actualViewWidth = new SimpleIntegerProperty();
 
