@@ -9,15 +9,17 @@ package knc.roguelike.model.entity.component;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import knc.roguelike.model.entity.Entity;
 
 public class BackgroundComponent extends Component {
     private Background background;
 
-    public BackgroundComponent() {
-        this(Color.BLACK);
+    public BackgroundComponent(Entity owner) {
+        this(owner, Color.BLACK);
     }
 
-    public BackgroundComponent(Color backgroundColor) {
+    public BackgroundComponent(Entity owner, Color backgroundColor) {
+        super(owner);
         setBackgroundColor(backgroundColor);
     }
 

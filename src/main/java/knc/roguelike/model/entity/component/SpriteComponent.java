@@ -13,19 +13,21 @@ import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import knc.roguelike.model.entity.Entity;
 
 public class SpriteComponent extends Component {
     private ImageView imageView;
     private Image image;
     private Color color;
 
-    public SpriteComponent(Image image) {
+    public SpriteComponent(Entity owner, Image image) {
+        super(owner);
         this.image = image;
         this.imageView = new ImageView(image);
     }
 
-    public SpriteComponent(Image image, Color color) {
-        this(image);
+    public SpriteComponent(Entity owner, Image image, Color color) {
+        this(owner, image);
         this.color = color;
     }
 

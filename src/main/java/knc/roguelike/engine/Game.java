@@ -10,7 +10,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -86,13 +85,13 @@ public class Game extends Application {
         var playerPosition = new Position(currentArea, entrance.position.posX.get(), entrance.position.posY.get());
         player = new Entity(playerPosition);
 
-        player.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
-        player.addComponent(new AliveComponent());
-        player.addComponent(new SolidComponent());
-        player.addComponent(new MobileComponent());
-        player.addComponent(new PlayerComponent());
-        player.addComponent(new HealthComponent());
-        player.addComponent(new AttributesComponent());
+        player.addComponent(new SpriteComponent(player, new Image("sprites/curses/curses_16x16_1.png"), Color.YELLOW));
+        player.addComponent(new AliveComponent(player));
+        player.addComponent(new SolidComponent(player));
+        player.addComponent(new MobileComponent(player));
+        player.addComponent(new PlayerComponent(player));
+        player.addComponent(new HealthComponent(player));
+        player.addComponent(new AttributesComponent(player));
 
         currentArea.getTile(playerPosition.posX.get(), playerPosition.posY.get()).addEntity(player);
     }

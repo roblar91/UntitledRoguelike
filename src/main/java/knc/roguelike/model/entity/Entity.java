@@ -34,7 +34,6 @@ public class Entity {
      */
     public void addComponent(Component component) {
         components.put(component.getType(), component);
-        component.setOwner(this);
     }
 
     /**

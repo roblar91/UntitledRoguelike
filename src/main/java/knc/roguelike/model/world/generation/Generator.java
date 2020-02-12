@@ -70,39 +70,39 @@ public final class Generator {
     private static void createExit(Area area, int posX, int posY) {
         var position = new Position(area, posX, posY);
         var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_60.png")));
-        entity.addComponent(new TerrainComponent());
-        entity.addComponent(new ExitComponent());
-        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        entity.addComponent(new SpriteComponent(entity, new Image("sprites/curses/curses_16x16_60.png")));
+        entity.addComponent(new TerrainComponent(entity));
+        entity.addComponent(new ExitComponent(entity));
+        entity.addComponent(new BackgroundComponent(entity, Color.DARKSLATEBLUE));
         area.getTile(posX, posY).addEntity(entity);
     }
 
     private static void createEntrance(Area area, int posX, int posY) {
         var position = new Position(area, posX, posY);
         var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_62.png")));
-        entity.addComponent(new TerrainComponent());
-        entity.addComponent(new EntranceComponent());
-        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        entity.addComponent(new SpriteComponent(entity, new Image("sprites/curses/curses_16x16_62.png")));
+        entity.addComponent(new TerrainComponent(entity));
+        entity.addComponent(new EntranceComponent(entity));
+        entity.addComponent(new BackgroundComponent(entity, Color.DARKSLATEBLUE));
         area.getTile(posX, posY).addEntity(entity);
     }
 
     private static void createWall(Area area, int posX, int posY) {
         var position = new Position(area, posX, posY);
         var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_35.png"), Color.DARKSLATEGRAY));
-        entity.addComponent(new BackgroundComponent(Color.BLACK));
-        entity.addComponent(new SolidComponent());
-        entity.addComponent(new TerrainComponent());
+        entity.addComponent(new SpriteComponent(entity, new Image("sprites/curses/curses_16x16_35.png"), Color.DARKSLATEGRAY));
+        entity.addComponent(new BackgroundComponent(entity, Color.BLACK));
+        entity.addComponent(new SolidComponent(entity));
+        entity.addComponent(new TerrainComponent(entity));
         area.getTile(posX, posY).addEntity(entity);
     }
 
     private static void createGround(Area area, int posX, int posY) {
         var position = new Position(area, posX, posY);
         var entity = new Entity(position);
-        entity.addComponent(new SpriteComponent(new Image("sprites/curses/curses_16x16_250.png")));
-        entity.addComponent(new TerrainComponent());
-        entity.addComponent(new BackgroundComponent(Color.DARKSLATEBLUE));
+        entity.addComponent(new SpriteComponent(entity, new Image("sprites/curses/curses_16x16_250.png")));
+        entity.addComponent(new TerrainComponent(entity));
+        entity.addComponent(new BackgroundComponent(entity, Color.DARKSLATEBLUE));
         area.getTile(posX, posY).addEntity(entity);
     }
 }

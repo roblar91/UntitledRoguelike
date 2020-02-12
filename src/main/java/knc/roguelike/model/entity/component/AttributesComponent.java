@@ -6,6 +6,8 @@
 
 package knc.roguelike.model.entity.component;
 
+import knc.roguelike.model.entity.Entity;
+
 public class AttributesComponent extends Component {
     private int strength;
     private int agility;
@@ -13,7 +15,8 @@ public class AttributesComponent extends Component {
     private int knowledge;
     private int devotion;
 
-    public AttributesComponent(int strength, int agility, int constitution, int knowledge, int devotion) {
+    public AttributesComponent(Entity owner, int strength, int agility, int constitution, int knowledge, int devotion) {
+        super(owner);
         this.strength = strength;
         this.agility = agility;
         this.constitution = constitution;
@@ -21,8 +24,8 @@ public class AttributesComponent extends Component {
         this.devotion = devotion;
     }
 
-    public AttributesComponent() {
-        this(10, 10, 10, 10, 10);
+    public AttributesComponent(Entity owner) {
+        this(owner, 10, 10, 10, 10, 10);
     }
 
     public int getStrength() {
