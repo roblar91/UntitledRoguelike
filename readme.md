@@ -1,2 +1,2 @@
 #### Untitled Roguelike
-Learning as I go along
+__Update:__ Project will be continued in Unity 
